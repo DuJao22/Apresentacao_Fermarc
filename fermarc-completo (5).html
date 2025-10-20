@@ -1,0 +1,1370 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fermarc Robótica - Componentes Eletrônicos, Arduino, Sensores e Módulos</title>
+    
+    <meta name="description" content="Fermarc Robótica - Tudo em robótica e automação! Arduino, sensores, módulos, ESP32, componentes eletrônicos.">
+    <meta name="keywords" content="robótica, arduino, sensores, esp32, módulos eletrônicos, automação, fermarc">
+    <meta property="og:title" content="Fermarc Robótica - A loja do maker brasileiro">
+    <meta property="og:type" content="website">
+    <meta name="theme-color" content="#111111">
+    <meta name="robots" content="index, follow">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --color-primary: #111111;
+            --color-red: #DC143C;
+            --color-red-dark: #C41230;
+            --color-white: #FFFFFF;
+            --color-gray-light: #f5f5f5;
+            --color-gray-medium: #7b7b7b;
+            --color-gray-dark: #474747;
+            --color-green: #00C851;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+            margin: 0;
+            background: #fff;
+        }
+        
+        /* ========== TOPO VERMELHO ========== */
+        .top_nav {
+            background: var(--color-red);
+            padding: 0;
+        }
+        
+        .top_nav_container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+        }
+        
+        .top_nav_left {
+            display: flex;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .top_nav_left li a {
+            display: block;
+            padding: 12px 18px;
+            color: #fff;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 700;
+            text-transform: uppercase;
+            transition: background 0.3s;
+        }
+        
+        .top_nav_left li a:hover {
+            background: var(--color-red-dark);
+        }
+        
+        .top_nav_right {
+            color: #fff;
+            font-size: 12px;
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+        
+        .top_nav_right a {
+            color: #fff;
+            text-decoration: none;
+        }
+        
+        /* ========== HEADER PRINCIPAL ========== */
+        .header_main {
+            background: var(--color-primary);
+            padding: 12px 0;
+            border-bottom: 3px solid var(--color-red);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .header_main_container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        .logo {
+            font-size: 28px;
+            font-weight: 900;
+            color: var(--color-red);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            white-space: nowrap;
+            min-width: 200px;
+        }
+        
+        .logo-icon {
+            font-size: 32px;
+        }
+        
+        .search-form {
+            flex: 1;
+            display: flex;
+        }
+        
+        .search-input {
+            flex: 1;
+            padding: 10px 15px;
+            border: none;
+            font-size: 14px;
+            outline: none;
+        }
+        
+        .search-btn {
+            padding: 10px 20px;
+            background: var(--color-red);
+            border: none;
+            color: #fff;
+            font-weight: 700;
+            cursor: pointer;
+        }
+        
+        .search-btn:hover {
+            background: var(--color-red-dark);
+        }
+        
+        .header_actions {
+            display: flex;
+            gap: 25px;
+            color: #fff;
+            align-items: center;
+        }
+        
+        .header_action {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            color: #fff;
+            font-size: 14px;
+            text-decoration: none;
+        }
+        
+        .header_action i {
+            font-size: 24px;
+        }
+        
+        /* ========== CONTAINER PARA O SIDEBAR ========== */
+        .sidebar_wrapper {
+            position: relative;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            padding-top: 20px;
+        }
+        
+        /* ========== SIDEBAR FLUTUANTE (SOBRE O BANNER) ========== */
+        .sidebar_categories {
+            position: absolute;
+            left: 20px;
+            top: 0;
+            width: 240px;
+            z-index: 100;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+        
+        .sidebar_header {
+            background: var(--color-red);
+            color: #fff;
+            padding: 12px 15px;
+            font-weight: 700;
+            font-size: 14px;
+            text-transform: uppercase;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .sidebar_menu {
+            list-style: none;
+            background: var(--color-red);
+            margin: 0;
+            padding: 0;
+        }
+        
+        .sidebar_menu > li {
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .sidebar_menu > li > a {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 15px;
+            color: #fff;
+            text-decoration: none;
+            font-size: 13px;
+            transition: all 0.2s;
+        }
+        
+        .sidebar_menu > li > a:hover {
+            background: var(--color-red-dark);
+            padding-left: 20px;
+        }
+        
+        .sidebar_menu > li > a i.fa-fw {
+            margin-right: 10px;
+            width: 18px;
+            text-align: center;
+        }
+        
+        .sidebar_menu > li > a .fa-chevron-right {
+            font-size: 12px;
+            opacity: 0.7;
+        }
+        
+        /* ========== SUBMENU FLUTUANTE ========== */
+        .sidebar_menu > li {
+            position: relative;
+        }
+        
+        .sidebar_submenu {
+            position: absolute;
+            left: 100%;
+            top: 0;
+            width: 600px;
+            background: #fff;
+            border: 1px solid #e0e0e0;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+            display: none;
+            z-index: 1000;
+            padding: 20px;
+        }
+        
+        .sidebar_menu > li:hover .sidebar_submenu {
+            display: flex;
+            gap: 20px;
+        }
+        
+        .submenu_categories {
+            flex: 1;
+            min-width: 200px;
+        }
+        
+        .submenu_categories h4 {
+            font-size: 14px;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 12px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid var(--color-red);
+        }
+        
+        .submenu_list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .submenu_list li {
+            margin-bottom: 8px;
+        }
+        
+        .submenu_list li a {
+            display: block;
+            padding: 6px 10px;
+            color: #666;
+            text-decoration: none;
+            font-size: 13px;
+            border-radius: 4px;
+            transition: all 0.2s;
+        }
+        
+        .submenu_list li a:hover {
+            background: #f5f5f5;
+            color: var(--color-red);
+            padding-left: 15px;
+        }
+        
+        .submenu_image {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #f9f9f9;
+            border-radius: 8px;
+            padding: 15px;
+            min-width: 280px;
+        }
+        
+        .submenu_image img {
+            max-width: 100%;
+            max-height: 250px;
+            object-fit: contain;
+        }
+        
+        /* ========== FULLBANNER (LARGURA TOTAL - PONTA A PONTA) ========== */
+        .fullbanner_section {
+            width: 100%;
+            margin-top: 20px;
+            margin-bottom: 20px;
+            position: relative;
+        }
+        
+        .carousel {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .carousel_track {
+            display: flex;
+            transition: transform 0.5s ease;
+        }
+        
+        .carousel_slide {
+            min-width: 100%;
+            height: 400px;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .carousel_slide.slide1 {
+            background-image: url('https://www.robocore.net/upload/lojavirtual/header_32_pt_H.png?1759419069');
+        }
+        
+        .carousel_slide.slide2 {
+            background-image: url('https://www.robocore.net/upload/lojavirtual/header_40_pt_H.png?1759419175');
+        }
+        
+        .carousel_slide.slide3 {
+            background-image: url('https://www.robocore.net/upload/lojavirtual/header_53_pt_H.jpg?1759419193');
+        }
+        
+        .carousel_btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0,0,0,0.6);
+            color: #fff;
+            border: none;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            font-size: 22px;
+            cursor: pointer;
+            z-index: 5;
+            transition: background 0.3s;
+        }
+        
+        .carousel_btn:hover {
+            background: rgba(0,0,0,0.8);
+        }
+        
+        .carousel_btn.prev { left: 15px; }
+        .carousel_btn.next { right: 15px; }
+        
+        /* ========== DOTS - NAVEGAÇÃO POR PONTOS ========== */
+        .carousel_dots {
+            text-align: center;
+            padding: 12px 0;
+        }
+        
+        .carousel_dot {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #ccc;
+            margin: 0 4px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .carousel_dot:hover {
+            background: #999;
+        }
+        
+        .carousel_dot.active {
+            background: var(--color-red);
+            width: 32px;
+            border-radius: 5px;
+        }
+        
+        /* ========== CONTEÚDO ABAIXO DO BANNER ========== */
+        .content_section {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* ========== FEATURES ========== */
+        .features {
+            background: #f5f5f5;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+        }
+        
+        .features_grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 15px;
+        }
+        
+        .feature_item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .feature_icon {
+            font-size: 28px;
+            color: var(--color-red);
+        }
+        
+        .feature_text strong {
+            display: block;
+            font-size: 13px;
+            color: #111;
+        }
+        
+        .feature_text span {
+            font-size: 11px;
+            color: #777;
+        }
+        
+        /* ========== PRODUCTS ========== */
+        .products_section {
+            margin-bottom: 40px;
+        }
+        
+        .section_header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        
+        .section_title {
+            font-size: 18px;
+            font-weight: 700;
+            color: #111;
+        }
+        
+        .btn_red {
+            background: var(--color-red);
+            color: #fff;
+            padding: 8px 18px;
+            border-radius: 5px;
+            font-weight: 700;
+            font-size: 13px;
+            border: none;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        
+        .btn_red:hover {
+            background: var(--color-red-dark);
+        }
+        
+        .separator {
+            border: none;
+            height: 2px;
+            background: linear-gradient(to right, var(--color-red), transparent);
+            margin-bottom: 20px;
+        }
+        
+        .products_grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+            gap: 18px;
+            list-style: none;
+        }
+        
+        .product_card {
+            background: #fff;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 15px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .product_card:hover {
+            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+            transform: translateY(-5px);
+            border-color: var(--color-red);
+        }
+        
+        .product_image_container {
+            text-align: center;
+            margin-bottom: 15px;
+            height: 130px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #fafafa;
+            border-radius: 5px;
+        }
+        
+        .product_placeholder {
+            font-size: 48px;
+        }
+        
+        .product_name {
+            font-size: 13px;
+            color: #474747;
+            text-align: center;
+            margin-bottom: 10px;
+            height: 40px;
+            overflow: hidden;
+        }
+        
+        .product_code {
+            text-align: center;
+            font-size: 11px;
+            color: #7b7b7b;
+            margin-bottom: 10px;
+        }
+        
+        .product_price {
+            text-align: center;
+        }
+        
+        .price_main {
+            font-size: 18px;
+            font-weight: 700;
+            color: #7b7b7b;
+            margin-bottom: 5px;
+        }
+        
+        .price_installment {
+            font-size: 11px;
+            color: #7b7b7b;
+            margin-bottom: 5px;
+        }
+        
+        .price_pix {
+            font-size: 13px;
+            color: #111;
+            font-weight: 700;
+        }
+        
+        .price_pix .pix_text {
+            font-size: 11px;
+            color: #00C851;
+        }
+        
+        /* ========== WHATSAPP ========== */
+        .whatsapp_float {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: #25D366;
+            color: #fff;
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            box-shadow: 0 4px 20px rgba(37,211,102,0.5);
+            z-index: 999;
+            cursor: pointer;
+            border: 3px solid var(--color-red);
+            transition: transform 0.3s;
+        }
+        
+        .whatsapp_float:hover {
+            transform: scale(1.1);
+        }
+        
+        /* ========== FOOTER ========== */
+        .footer {
+            background: #111;
+            color: #fff;
+            padding: 40px 0 20px;
+            margin-top: 60px;
+        }
+        
+        .footer_container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .footer_grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .footer_section h3 {
+            color: var(--color-red);
+            margin-bottom: 15px;
+            font-size: 16px;
+        }
+        
+        .footer_section p {
+            font-size: 14px;
+            color: #aaa;
+            line-height: 1.6;
+        }
+        
+        .footer_section a {
+            display: block;
+            color: #aaa;
+            text-decoration: none;
+            margin-bottom: 8px;
+            font-size: 14px;
+            transition: color 0.3s;
+        }
+        
+        .footer_section a:hover {
+            color: var(--color-red);
+        }
+        
+        .footer_bottom {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid #333;
+            color: #888;
+            font-size: 13px;
+        }
+        
+        .footer_credits {
+            text-align: center;
+            margin-top: 15px;
+            font-size: 13px;
+        }
+        
+        .footer_credits strong {
+            color: var(--color-red);
+        }
+        
+        /* ========== RESPONSIVE ========== */
+        @media (max-width: 1024px) {
+            .sidebar_categories {
+                width: 220px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            /* Top Nav Mobile */
+            .top_nav_container {
+                flex-direction: column;
+                padding: 10px;
+                gap: 10px;
+            }
+            
+            .top_nav_left {
+                flex-wrap: wrap;
+                justify-content: center;
+                width: 100%;
+            }
+            
+            .top_nav_left li a {
+                padding: 8px 10px;
+                font-size: 10px;
+            }
+            
+            .top_nav_right {
+                flex-direction: column;
+                gap: 8px;
+                font-size: 11px;
+                text-align: center;
+            }
+            
+            /* Header Mobile */
+            .header_main_container {
+                flex-direction: column;
+                gap: 12px;
+            }
+            
+            .logo {
+                min-width: auto;
+                font-size: 24px;
+            }
+            
+            .search-form {
+                width: 100%;
+            }
+            
+            .header_actions {
+                flex-direction: row;
+                justify-content: center;
+                gap: 20px;
+            }
+            
+            .header_action {
+                font-size: 12px;
+            }
+            
+            .header_action i {
+                font-size: 20px;
+            }
+            
+            /* Sidebar Mobile - Stack Above Banner */
+            .sidebar_wrapper {
+                padding: 0 10px;
+                margin-top: 15px;
+            }
+            
+            .sidebar_categories {
+                position: relative !important;
+                left: 0 !important;
+                top: 0 !important;
+                width: 100%;
+                margin-bottom: 15px;
+                box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+            }
+            
+            .sidebar_menu > li > a {
+                font-size: 12px;
+                padding: 10px 12px;
+            }
+            
+            /* Esconder submenus em mobile */
+            .sidebar_submenu {
+                display: none !important;
+            }
+            
+            /* Banner Mobile */
+            .fullbanner_section {
+                margin-top: 0;
+                margin-bottom: 15px;
+            }
+            
+            .carousel_slide {
+                height: 250px;
+                background-size: cover;
+            }
+            
+            .carousel_btn {
+                width: 35px;
+                height: 35px;
+                font-size: 18px;
+            }
+            
+            .carousel_btn.prev { left: 10px; }
+            .carousel_btn.next { right: 10px; }
+            
+            .carousel_dots {
+                padding: 8px 0;
+            }
+            
+            .carousel_dot {
+                width: 8px;
+                height: 8px;
+                margin: 0 3px;
+            }
+            
+            .carousel_dot.active {
+                width: 24px;
+            }
+            
+            /* Content Mobile */
+            .content_section {
+                padding: 0 10px;
+            }
+            
+            .features {
+                padding: 15px;
+            }
+            
+            .features_grid {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+            
+            .feature_item {
+                gap: 10px;
+            }
+            
+            .feature_icon {
+                font-size: 24px;
+            }
+            
+            .feature_text strong {
+                font-size: 12px;
+            }
+            
+            .feature_text span {
+                font-size: 10px;
+            }
+            
+            /* Products Mobile */
+            .section_header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+            
+            .section_title {
+                font-size: 16px;
+            }
+            
+            .btn_red {
+                width: 100%;
+                padding: 10px 18px;
+            }
+            
+            .products_grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 12px;
+            }
+            
+            .product_card {
+                padding: 12px;
+            }
+            
+            .product_image_container {
+                height: 100px;
+            }
+            
+            .product_placeholder {
+                font-size: 36px;
+            }
+            
+            .product_name {
+                font-size: 12px;
+                height: 36px;
+            }
+            
+            .product_code {
+                font-size: 10px;
+            }
+            
+            .price_main {
+                font-size: 16px;
+            }
+            
+            .price_installment {
+                font-size: 10px;
+            }
+            
+            .price_pix {
+                font-size: 12px;
+            }
+            
+            /* WhatsApp Mobile */
+            .whatsapp_float {
+                width: 60px;
+                height: 60px;
+                bottom: 20px;
+                right: 20px;
+                font-size: 32px;
+            }
+            
+            /* Footer Mobile */
+            .footer {
+                padding: 30px 0 15px;
+            }
+            
+            .footer_grid {
+                grid-template-columns: 1fr;
+                gap: 25px;
+            }
+            
+            .footer_section h3 {
+                font-size: 15px;
+            }
+            
+            .footer_section p,
+            .footer_section a {
+                font-size: 13px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .logo {
+                font-size: 20px;
+            }
+            
+            .carousel_slide {
+                height: 200px;
+            }
+            
+            .products_grid {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- ========== TOPO VERMELHO ========== -->
+    <nav class="top_nav">
+        <div class="top_nav_container">
+            <ul class="top_nav_left">
+                <li><a href="#">LOJA VIRTUAL</a></li>
+                <li><a href="#">TUTORIAIS</a></li>
+                <li><a href="#">IDE</a></li>
+                <li><a href="#">EVENTOS</a></li>
+                <li><a href="#">QUEM SOMOS</a></li>
+                <li><a href="#">CONTATO</a></li>
+            </ul>
+            <div class="top_nav_right">
+                <a href="tel:+553125570868"><i class="fa fa-phone"></i> (31) 2557-0868</a>
+                <a href="mailto:vendasfermarc@gmail.com"><i class="fa fa-envelope"></i> vendasfermarc@gmail.com</a>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- ========== HEADER PRINCIPAL ========== -->
+    <header class="header_main">
+        <div class="header_main_container">
+            <div class="logo">
+                <i class="fa fa-cog logo-icon"></i>
+                FERMARC
+            </div>
+            
+            <form class="search-form" onsubmit="return false;">
+                <input type="text" class="search-input" placeholder="Digite aqui o que você procura..." />
+                <button type="submit" class="search-btn">
+                    <i class="fa fa-search"></i>
+                </button>
+            </form>
+            
+            <div class="header_actions">
+                <a href="#" class="header_action">
+                    <i class="fa fa-shopping-cart"></i>
+                    <div>
+                        <div style="font-size: 11px;">Meu</div>
+                        <div style="font-weight: 700;">Carrinho</div>
+                    </div>
+                </a>
+                <a href="#" class="header_action">
+                    <i class="fa fa-user-circle"></i>
+                    <div>
+                        <div style="font-size: 11px;">Entre ou</div>
+                        <div style="font-weight: 700;">Cadastre-se</div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </header>
+    
+    <!-- ========== WRAPPER PARA POSICIONAR O SIDEBAR ========== -->
+    <div class="sidebar_wrapper">
+        <!-- ========== SIDEBAR FLUTUANTE (SOBRE O BANNER) ========== -->
+        <aside class="sidebar_categories">
+            <div class="sidebar_header">
+                <i class="fa fa-bars"></i> CATEGORIAS
+            </div>
+            <ul class="sidebar_menu">
+                <li>
+                    <a href="#">
+                        <span><i class="fa fa-bolt fa-fw"></i> Originais RoboCore</span>
+                        <i class="fa fa-chevron-right"></i>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <span><i class="fa fa-graduation-cap fa-fw"></i> Kits Didáticos</span>
+                        <i class="fa fa-chevron-right"></i>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <span><i class="fa fa-cube fa-fw"></i> Impressão 3D</span>
+                        <i class="fa fa-chevron-right"></i>
+                    </a>
+                    <div class="sidebar_submenu">
+                        <div class="submenu_categories">
+                            <h4>Impressão 3D</h4>
+                            <ul class="submenu_list">
+                                <li><a href="#">Filamentos PLA</a></li>
+                                <li><a href="#">Filamentos PETG</a></li>
+                                <li><a href="#">Filamentos ABS</a></li>
+                                <li><a href="#">Filamentos TPU</a></li>
+                                <li><a href="#">Filamentos Especiais</a></li>
+                                <li><a href="#">Impressoras 3D</a></li>
+                                <li><a href="#">Peças e Acessórios</a></li>
+                            </ul>
+                        </div>
+                        <div class="submenu_image">
+                            <img src="https://d229kd5ey79jzj.cloudfront.net/1242/images/1242_2_H.png?20231115105658" alt="Impressão 3D">
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <a href="#">
+                        <span><i class="fa fa-microchip fa-fw"></i> Arduino</span>
+                        <i class="fa fa-chevron-right"></i>
+                    </a>
+                    <div class="sidebar_submenu">
+                        <div class="submenu_categories">
+                            <h4>Arduino</h4>
+                            <ul class="submenu_list">
+                                <li><a href="#">Placas Arduino</a></li>
+                                <li><a href="#">Shields Arduino</a></li>
+                                <li><a href="#">Sensores</a></li>
+                                <li><a href="#">Módulos</a></li>
+                                <li><a href="#">Kits Arduino</a></li>
+                                <li><a href="#">Acessórios</a></li>
+                            </ul>
+                        </div>
+                        <div class="submenu_image">
+                            <img src="https://d229kd5ey79jzj.cloudfront.net/1478/images/1478_1_H.png?20240319172749" alt="Arduino">
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <a href="#">
+                        <span><i class="fa fa-raspberry-pi fa-fw"></i> Raspberry Pi</span>
+                        <i class="fa fa-chevron-right"></i>
+                    </a>
+                    <div class="sidebar_submenu">
+                        <div class="submenu_categories">
+                            <h4>Raspberry Pi</h4>
+                            <ul class="submenu_list">
+                                <li><a href="#">Raspberry Pi 5</a></li>
+                                <li><a href="#">Raspberry Pi 4</a></li>
+                                <li><a href="#">Raspberry Pi Zero</a></li>
+                                <li><a href="#">Kits Raspberry</a></li>
+                                <li><a href="#">Acessórios</a></li>
+                                <li><a href="#">Cases e Gabinetes</a></li>
+                            </ul>
+                        </div>
+                        <div class="submenu_image">
+                            <img src="https://d229kd5ey79jzj.cloudfront.net/1507/images/1507_1_H.png?20240515102848" alt="Raspberry Pi">
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <a href="#">
+                        <span><i class="fa fa-circle-o fa-fw"></i> BBC micro:bit</span>
+                        <i class="fa fa-chevron-right"></i>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <span><i class="fa fa-cubes fa-fw"></i> LEGO Education</span>
+                        <i class="fa fa-chevron-right"></i>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <span><i class="fa fa-android fa-fw"></i> Robótica / Automação</span>
+                        <i class="fa fa-chevron-right"></i>
+                    </a>
+                    <div class="sidebar_submenu">
+                        <div class="submenu_categories">
+                            <h4>Robótica / Automação</h4>
+                            <ul class="submenu_list">
+                                <li><a href="#">Kits de Robótica</a></li>
+                                <li><a href="#">Chassis e Estruturas</a></li>
+                                <li><a href="#">Motores e Servos</a></li>
+                                <li><a href="#">Rodas e Esteiras</a></li>
+                                <li><a href="#">Drivers de Motor</a></li>
+                                <li><a href="#">Braços Robóticos</a></li>
+                            </ul>
+                        </div>
+                        <div class="submenu_image">
+                            <img src="https://d229kd5ey79jzj.cloudfront.net/1459/images/1459_1_H.png?20231219144559" alt="Robótica">
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <a href="#">
+                        <span><i class="fa fa-gears fa-fw"></i> Componentes Eletrônicos</span>
+                        <i class="fa fa-chevron-right"></i>
+                    </a>
+                    <div class="sidebar_submenu">
+                        <div class="submenu_categories">
+                            <h4>Componentes Eletrônicos</h4>
+                            <ul class="submenu_list">
+                                <li><a href="#">Resistores</a></li>
+                                <li><a href="#">Capacitores</a></li>
+                                <li><a href="#">LEDs</a></li>
+                                <li><a href="#">Transistores</a></li>
+                                <li><a href="#">Diodos</a></li>
+                                <li><a href="#">Conectores</a></li>
+                                <li><a href="#">Circuitos Integrados</a></li>
+                            </ul>
+                        </div>
+                        <div class="submenu_image">
+                            <img src="https://d229kd5ey79jzj.cloudfront.net/1381/images/1381_1_H.png?20230913145849" alt="Componentes">
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <a href="#">
+                        <span><i class="fa fa-book fa-fw"></i> Livros</span>
+                        <i class="fa fa-chevron-right"></i>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <span><i class="fa fa-desktop fa-fw"></i> Placas de Desenvolvimento</span>
+                        <i class="fa fa-chevron-right"></i>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <span><i class="fa fa-wrench fa-fw"></i> Prototipagem e Ferramentas</span>
+                        <i class="fa fa-chevron-right"></i>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <span><i class="fa fa-wifi fa-fw"></i> Wireless e IoT</span>
+                        <i class="fa fa-chevron-right"></i>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <span><i class="fa fa-gift fa-fw"></i> Ideias de Presentes</span>
+                        <i class="fa fa-chevron-right"></i>
+                    </a>
+                </li>
+            </ul>
+        </aside>
+    </div>
+    
+    <!-- ========== FULLBANNER (LARGURA COMPLETA - PONTA A PONTA) ========== -->
+    <section class="fullbanner_section">
+        <div class="carousel">
+            <button class="carousel_btn prev" onclick="moveCarousel(-1)">‹</button>
+            <div class="carousel_track" id="carouselTrack">
+                <div class="carousel_slide slide1"></div>
+                <div class="carousel_slide slide2"></div>
+                <div class="carousel_slide slide3"></div>
+            </div>
+            <button class="carousel_btn next" onclick="moveCarousel(1)">›</button>
+        </div>
+        
+        <!-- DOTS - NAVEGAÇÃO POR PONTOS -->
+        <div class="carousel_dots" id="carouselDots"></div>
+    </section>
+    
+    <!-- ========== CONTEÚDO ABAIXO DO BANNER ========== -->
+    <div class="content_section">
+        <!-- ========== FEATURES ========== -->
+        <section class="features">
+            <div class="features_grid">
+                <div class="feature_item">
+                    <i class="fa fa-truck feature_icon"></i>
+                    <div class="feature_text">
+                        <strong>Frete grátis</strong>
+                        <span>pedidos acima de R$ 600</span>
+                    </div>
+                </div>
+                <div class="feature_item">
+                    <i class="fa fa-credit-card feature_icon"></i>
+                    <div class="feature_text">
+                        <strong>Parcele em até 12x</strong>
+                        <span>no cartão de crédito</span>
+                    </div>
+                </div>
+                <div class="feature_item">
+                    <i class="fa fa-barcode feature_icon"></i>
+                    <div class="feature_text">
+                        <strong>Boleto / PIX</strong>
+                        <span>pagamento facilitado</span>
+                    </div>
+                </div>
+                <div class="feature_item">
+                    <i class="fa fa-shield feature_icon"></i>
+                    <div class="feature_text">
+                        <strong>Produtos com Garantia</strong>
+                        <span>qualidade certificada</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- ========== PRODUTOS ========== -->
+        <section class="products_section">
+            <div class="section_header">
+                <div class="section_title">Novidades</div>
+                <a href="https://wa.me/5531993739746?text=Quero%20ver%20novidades" target="_blank">
+                    <button class="btn_red">Ver todos</button>
+                </a>
+            </div>
+            <hr class="separator">
+            
+            <ul class="products_grid">
+                <li class="product_card" onclick="openWhatsApp('Sensor de Nível XKC-Y25-NPN')">
+                    <div class="product_image_container">
+                        <span class="product_placeholder">📡</span>
+                    </div>
+                    <div class="product_name">Sensor de Nível XKC-Y25-NPN</div>
+                    <div class="product_code">Código: 767</div>
+                    <div class="product_price">
+                        <div class="price_main">R$ 79,50</div>
+                        <div class="price_installment">até 9X R$ 10,44</div>
+                        <div class="price_pix">R$ 77,12 <span class="pix_text">no PIX</span></div>
+                    </div>
+                </li>
+                <li class="product_card" onclick="openWhatsApp('Conversor TTL para RS485')">
+                    <div class="product_image_container">
+                        <span class="product_placeholder">🔄</span>
+                    </div>
+                    <div class="product_name">Conversor TTL para RS485</div>
+                    <div class="product_code">Código: 766</div>
+                    <div class="product_price">
+                        <div class="price_main">R$ 28,50</div>
+                        <div class="price_installment">até 3X R$ 10,42</div>
+                        <div class="price_pix">R$ 27,64 <span class="pix_text">no PIX</span></div>
+                    </div>
+                </li>
+                <li class="product_card" onclick="openWhatsApp('Sensor PT100 -20 A 450°C')">
+                    <div class="product_image_container">
+                        <span class="product_placeholder">🌡️</span>
+                    </div>
+                    <div class="product_name">Sensor PT100 -20 A 450°C</div>
+                    <div class="product_code">Código: 765</div>
+                    <div class="product_price">
+                        <div class="price_main">R$ 18,90</div>
+                        <div class="price_installment">até 2X R$ 10,22</div>
+                        <div class="price_pix">R$ 18,33 <span class="pix_text">no PIX</span></div>
+                    </div>
+                </li>
+                <li class="product_card" onclick="openWhatsApp('Módulo Sensor PT100 MAX31865')">
+                    <div class="product_image_container">
+                        <span class="product_placeholder">📊</span>
+                    </div>
+                    <div class="product_name">Módulo Sensor PT100 MAX31865</div>
+                    <div class="product_code">Código: 764</div>
+                    <div class="product_price">
+                        <div class="price_main">R$ 73,00</div>
+                        <div class="price_installment">até 8X R$ 10,65</div>
+                        <div class="price_pix">R$ 70,81 <span class="pix_text">no PIX</span></div>
+                    </div>
+                </li>
+                <li class="product_card" onclick="openWhatsApp('Roda Mecanum 48mm')">
+                    <div class="product_image_container">
+                        <span class="product_placeholder">⚙️</span>
+                    </div>
+                    <div class="product_name">Roda Mecanum 48mm</div>
+                    <div class="product_code">Código: 763</div>
+                    <div class="product_price">
+                        <div class="price_main">R$ 62,00</div>
+                        <div class="price_installment">até 7X R$ 10,21</div>
+                        <div class="price_pix">R$ 60,14 <span class="pix_text">no PIX</span></div>
+                    </div>
+                </li>
+                <li class="product_card" onclick="openWhatsApp('ESP32-S3 CAM OV2640')">
+                    <div class="product_image_container">
+                        <span class="product_placeholder">📷</span>
+                    </div>
+                    <div class="product_name">ESP32-S3 CAM OV2640</div>
+                    <div class="product_code">Código: 760</div>
+                    <div class="product_price">
+                        <div class="price_main">R$ 135,00</div>
+                        <div class="price_installment">até 12X R$ 13,75</div>
+                        <div class="price_pix">R$ 130,95 <span class="pix_text">no PIX</span></div>
+                    </div>
+                </li>
+            </ul>
+        </section>
+    </div>
+    
+    <!-- ========== WHATSAPP FLUTUANTE ========== -->
+    <a href="https://wa.me/5531993739746" target="_blank" class="whatsapp_float">
+        <i class="fa fa-whatsapp"></i>
+    </a>
+    
+    <!-- ========== FOOTER ========== -->
+    <footer class="footer">
+        <div class="footer_container">
+            <div class="footer_grid">
+                <div class="footer_section">
+                    <h3>Sobre a Fermarc</h3>
+                    <p>Loja especializada em componentes para robótica, automação e eletrônica.</p>
+                </div>
+                <div class="footer_section">
+                    <h3>Atendimento</h3>
+                    <a href="tel:+553125570868">📞 (31) 2557-0868</a>
+                    <a href="https://wa.me/5531993739746">💬 (31) 99373-9746</a>
+                    <a href="mailto:vendasfermarc@gmail.com">✉️ vendasfermarc@gmail.com</a>
+                </div>
+                <div class="footer_section">
+                    <h3>Redes Sociais</h3>
+                    <a href="https://facebook.com/fermarc.fermarc.5/">Facebook</a>
+                    <a href="https://instagram.com/fermarcrobotica/">Instagram</a>
+                    <a href="https://youtube.com/user/MarcosJader1">YouTube</a>
+                </div>
+            </div>
+            <div class="footer_bottom">
+                <p>&copy; 2025 Fermarc Robótica - Todos os direitos reservados</p>
+            </div>
+            <div class="footer_credits">
+                <p>🎯 Website desenvolvido por <strong>João Layon</strong></p>
+                <p><strong>SEO & Soluções Digitais</strong></p>
+            </div>
+        </div>
+    </footer>
+    
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.carousel_slide');
+        const totalSlides = slides.length;
+        
+        function updateCarousel() {
+            const track = document.getElementById('carouselTrack');
+            track.style.transform = `translateX(-${currentSlide * 100}%)`;
+            updateDots();
+        }
+        
+        function moveCarousel(direction) {
+            currentSlide = (currentSlide + direction + totalSlides) % totalSlides;
+            updateCarousel();
+        }
+        
+        function createDots() {
+            const dotsContainer = document.getElementById('carouselDots');
+            for (let i = 0; i < totalSlides; i++) {
+                const dot = document.createElement('span');
+                dot.className = 'carousel_dot';
+                if (i === 0) dot.classList.add('active');
+                dot.onclick = () => {
+                    currentSlide = i;
+                    updateCarousel();
+                };
+                dotsContainer.appendChild(dot);
+            }
+        }
+        
+        function updateDots() {
+            const dots = document.querySelectorAll('.carousel_dot');
+            dots.forEach((dot, index) => {
+                dot.classList.toggle('active', index === currentSlide);
+            });
+        }
+        
+        setInterval(() => moveCarousel(1), 5000);
+        createDots();
+        
+        function openWhatsApp(productName) {
+            const message = encodeURIComponent(`Olá! Tenho interesse no produto: ${productName}`);
+            window.open(`https://wa.me/5531993739746?text=${message}`, '_blank');
+        }
+        
+        console.log('%c🎯 Desenvolvido por João Layon - SEO Soluções Digitais', 'color: #DC143C; font-size: 16px; font-weight: bold;');
+    </script>
+</body>
+</html>
