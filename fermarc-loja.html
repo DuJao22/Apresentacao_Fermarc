@@ -1,0 +1,1200 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fermarc Robótica - Componentes Eletrônicos, Arduino, Sensores e Módulos</title>
+    
+    <meta name="description" content="Fermarc Robótica - Tudo em robótica e automação! Arduino, sensores, módulos, ESP32, componentes eletrônicos.">
+    <meta name="keywords" content="robótica, arduino, sensores, esp32, módulos eletrônicos, automação, fermarc">
+    <meta property="og:title" content="Fermarc Robótica - A loja do maker brasileiro">
+    <meta property="og:type" content="website">
+    <meta name="theme-color" content="#111111">
+    <meta name="robots" content="index, follow">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --color-primary: #111111;
+            --color-red: #DC143C;
+            --color-red-dark: #C41230;
+            --color-white: #FFFFFF;
+            --color-gray-light: #f5f5f5;
+            --color-gray-medium: #7b7b7b;
+            --color-gray-dark: #474747;
+            --color-green: #00C851;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+            margin: 0;
+            background: #fff;
+        }
+        
+        /* ========== TOPO VERMELHO ========== */
+        .top_nav {
+            background: var(--color-red);
+            padding: 0;
+        }
+        
+        .top_nav_container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+        }
+        
+        .top_nav_left {
+            display: flex;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .top_nav_left li a {
+            display: block;
+            padding: 12px 18px;
+            color: #fff;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 700;
+            text-transform: uppercase;
+            transition: background 0.3s;
+        }
+        
+        .top_nav_left li a:hover {
+            background: var(--color-red-dark);
+        }
+        
+        .top_nav_right {
+            color: #fff;
+            font-size: 12px;
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+        
+        .top_nav_right a {
+            color: #fff;
+            text-decoration: none;
+        }
+        
+        /* ========== HEADER PRINCIPAL ========== */
+        .header_main {
+            background: var(--color-primary);
+            padding: 12px 0;
+            border-bottom: 3px solid var(--color-red);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .header_main_container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        .logo {
+            font-size: 28px;
+            font-weight: 900;
+            color: var(--color-red);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            white-space: nowrap;
+            min-width: 200px;
+            text-decoration: none;
+        }
+        
+        .logo-icon {
+            font-size: 32px;
+        }
+        
+        .search-form {
+            flex: 1;
+            display: flex;
+        }
+        
+        .search-input {
+            flex: 1;
+            padding: 10px 15px;
+            border: none;
+            font-size: 14px;
+            outline: none;
+        }
+        
+        .search-btn {
+            padding: 10px 20px;
+            background: var(--color-red);
+            border: none;
+            color: #fff;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        
+        .search-btn:hover {
+            background: var(--color-red-dark);
+        }
+        
+        .header_actions {
+            display: flex;
+            gap: 25px;
+            color: #fff;
+            align-items: center;
+        }
+        
+        .header_action {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            color: #fff;
+            font-size: 14px;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .header_action:hover {
+            color: var(--color-red);
+        }
+        
+        .header_action i {
+            font-size: 24px;
+        }
+        
+        /* ========== CONTAINER PARA O SIDEBAR ========== */
+        .sidebar_wrapper {
+            position: relative;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            padding-top: 20px;
+        }
+        
+        /* ========== SIDEBAR FLUTUANTE ========== */
+        .sidebar_categories {
+            position: absolute;
+            left: 20px;
+            top: 0;
+            width: 240px;
+            z-index: 100;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+        
+        .sidebar_header {
+            background: var(--color-red);
+            color: #fff;
+            padding: 12px 15px;
+            font-weight: 700;
+            font-size: 14px;
+            text-transform: uppercase;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .sidebar_menu {
+            list-style: none;
+            background: var(--color-red);
+            margin: 0;
+            padding: 0;
+        }
+        
+        .sidebar_menu > li {
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .sidebar_menu > li > a {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 15px;
+            color: #fff;
+            text-decoration: none;
+            font-size: 13px;
+            transition: all 0.2s;
+        }
+        
+        .sidebar_menu > li > a:hover {
+            background: var(--color-red-dark);
+            padding-left: 20px;
+        }
+        
+        .sidebar_menu > li > a i.fa-fw {
+            margin-right: 10px;
+            width: 18px;
+            text-align: center;
+        }
+        
+        .sidebar_menu > li > a .fa-chevron-right {
+            font-size: 12px;
+            opacity: 0.7;
+        }
+        
+        /* ========== SUBMENU FLUTUANTE ========== */
+        .sidebar_menu > li {
+            position: relative;
+        }
+        
+        .sidebar_submenu {
+            position: absolute;
+            left: 100%;
+            top: 0;
+            width: 600px;
+            background: #fff;
+            border: 1px solid #e0e0e0;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+            display: none;
+            z-index: 1000;
+            padding: 20px;
+        }
+        
+        .sidebar_menu > li:hover .sidebar_submenu {
+            display: flex;
+            gap: 20px;
+        }
+        
+        .submenu_categories {
+            flex: 1;
+            min-width: 200px;
+        }
+        
+        .submenu_categories h4 {
+            font-size: 14px;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 12px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid var(--color-red);
+        }
+        
+        .submenu_list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .submenu_list li {
+            margin-bottom: 8px;
+        }
+        
+        .submenu_list li a {
+            display: block;
+            padding: 6px 10px;
+            color: #666;
+            text-decoration: none;
+            font-size: 13px;
+            border-radius: 4px;
+            transition: all 0.2s;
+        }
+        
+        .submenu_list li a:hover {
+            background: #f5f5f5;
+            color: var(--color-red);
+            padding-left: 15px;
+        }
+        
+        .submenu_image {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #f9f9f9;
+            border-radius: 8px;
+            padding: 15px;
+            min-width: 280px;
+        }
+        
+        .submenu_image img {
+            max-width: 100%;
+            max-height: 250px;
+            object-fit: contain;
+        }
+        
+        /* ========== FULLBANNER ========== */
+        .fullbanner_section {
+            width: 100%;
+            margin-top: 20px;
+            margin-bottom: 20px;
+            position: relative;
+        }
+        
+        .carousel {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .carousel_track {
+            display: flex;
+            transition: transform 0.5s ease;
+        }
+        
+        .carousel_slide {
+            min-width: 100%;
+            height: 400px;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .carousel_slide.slide1 {
+            background-image: url('https://www.robocore.net/upload/lojavirtual/header_32_pt_H.png?1759419069');
+        }
+        
+        .carousel_slide.slide2 {
+            background-image: url('https://www.robocore.net/upload/lojavirtual/header_40_pt_H.png?1759419175');
+        }
+        
+        .carousel_slide.slide3 {
+            background-image: url('https://www.robocore.net/upload/lojavirtual/header_53_pt_H.jpg?1759419193');
+        }
+        
+        .carousel_btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0,0,0,0.6);
+            color: #fff;
+            border: none;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            font-size: 22px;
+            cursor: pointer;
+            z-index: 5;
+            transition: background 0.3s;
+        }
+        
+        .carousel_btn:hover {
+            background: rgba(0,0,0,0.8);
+        }
+        
+        .carousel_btn.prev { left: 15px; }
+        .carousel_btn.next { right: 15px; }
+        
+        /* ========== DOTS ========== */
+        .carousel_dots {
+            text-align: center;
+            padding: 12px 0;
+        }
+        
+        .carousel_dot {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #ccc;
+            margin: 0 4px;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: none;
+        }
+        
+        .carousel_dot:hover {
+            background: #999;
+        }
+        
+        .carousel_dot.active {
+            background: var(--color-red);
+            width: 32px;
+            border-radius: 5px;
+        }
+        
+        /* ========== CONTEÚDO ========== */
+        .content_section {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* ========== FEATURES ========== */
+        .features {
+            background: #f5f5f5;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+        }
+        
+        .features_grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 15px;
+        }
+        
+        .feature_item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .feature_icon {
+            font-size: 28px;
+            color: var(--color-red);
+        }
+        
+        .feature_text strong {
+            display: block;
+            font-size: 13px;
+            color: #111;
+        }
+        
+        .feature_text span {
+            font-size: 11px;
+            color: #777;
+        }
+        
+        /* ========== PRODUCTS ========== */
+        .products_section {
+            margin-bottom: 40px;
+        }
+        
+        .section_header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--color-red);
+        }
+        
+        .section_title {
+            font-size: 20px;
+            font-weight: 700;
+            color: #111;
+            text-transform: uppercase;
+        }
+        
+        .btn_red {
+            background: var(--color-red);
+            color: #fff;
+            padding: 8px 18px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 700;
+            transition: background 0.3s;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .btn_red:hover {
+            background: var(--color-red-dark);
+        }
+        
+        .products_grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 20px;
+        }
+        
+        .product_card {
+            background: #fff;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 15px;
+            text-align: center;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        
+        .product_card:hover {
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transform: translateY(-5px);
+        }
+        
+        .product_image {
+            width: 100%;
+            height: 180px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 15px;
+            background: #f9f9f9;
+            border-radius: 6px;
+        }
+        
+        .product_image i {
+            font-size: 64px;
+            color: var(--color-gray-medium);
+        }
+        
+        .product_code {
+            font-size: 11px;
+            color: #999;
+            margin-bottom: 8px;
+        }
+        
+        .product_name {
+            font-size: 14px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 12px;
+            min-height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .product_price {
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--color-red);
+            margin-bottom: 8px;
+        }
+        
+        .product_installments {
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 8px;
+        }
+        
+        .product_pix {
+            font-size: 13px;
+            color: var(--color-green);
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+        
+        .btn_buy {
+            width: 100%;
+            padding: 10px;
+            background: var(--color-red);
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        
+        .btn_buy:hover {
+            background: var(--color-red-dark);
+        }
+        
+        /* ========== BRANDS ========== */
+        .brands_section {
+            background: #f5f5f5;
+            padding: 30px 20px;
+            margin-bottom: 40px;
+        }
+        
+        .brands_container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .brands_grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
+            align-items: center;
+        }
+        
+        .brand_item {
+            background: #fff;
+            padding: 20px;
+            text-align: center;
+            border-radius: 8px;
+            transition: transform 0.3s;
+            border: 1px solid #e0e0e0;
+        }
+        
+        .brand_item:hover {
+            transform: scale(1.05);
+        }
+        
+        .brand_item img {
+            max-width: 100%;
+            height: 50px;
+            object-fit: contain;
+            filter: grayscale(100%);
+            opacity: 0.7;
+            transition: all 0.3s;
+        }
+        
+        .brand_item:hover img {
+            filter: grayscale(0%);
+            opacity: 1;
+        }
+        
+        /* ========== FOOTER ========== */
+        .footer {
+            background: var(--color-primary);
+            color: #fff;
+            padding: 40px 20px 20px;
+        }
+        
+        .footer_container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .footer_grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .footer_column h3 {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: var(--color-red);
+        }
+        
+        .footer_column ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .footer_column ul li {
+            margin-bottom: 10px;
+        }
+        
+        .footer_column ul li a {
+            color: #ccc;
+            text-decoration: none;
+            font-size: 13px;
+            transition: color 0.3s;
+        }
+        
+        .footer_column ul li a:hover {
+            color: var(--color-red);
+        }
+        
+        .footer_social {
+            display: flex;
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .footer_social a {
+            width: 40px;
+            height: 40px;
+            background: var(--color-red);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 20px;
+            transition: background 0.3s;
+            text-decoration: none;
+        }
+        
+        .footer_social a:hover {
+            background: var(--color-red-dark);
+        }
+        
+        .footer_bottom {
+            border-top: 1px solid #333;
+            padding-top: 20px;
+            text-align: center;
+            font-size: 12px;
+            color: #999;
+        }
+        
+        /* ========== RESPONSIVE ========== */
+        @media (max-width: 768px) {
+            .top_nav_left {
+                flex-wrap: wrap;
+            }
+            
+            .top_nav_right {
+                font-size: 11px;
+            }
+            
+            .header_main_container {
+                flex-wrap: wrap;
+            }
+            
+            .logo {
+                font-size: 22px;
+                min-width: auto;
+            }
+            
+            .search-form {
+                order: 3;
+                width: 100%;
+            }
+            
+            .sidebar_categories {
+                position: relative;
+                width: 100%;
+                left: 0;
+                margin-bottom: 20px;
+            }
+            
+            .carousel_slide {
+                height: 250px;
+            }
+            
+            .products_grid {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- TOPO VERMELHO -->
+    <nav class="top_nav">
+        <div class="top_nav_container">
+            <ul class="top_nav_left">
+                <li><a href="#home">Início</a></li>
+                <li><a href="#produtos">Produtos</a></li>
+                <li><a href="#sobre">Sobre</a></li>
+                <li><a href="#contato">Contato</a></li>
+            </ul>
+            <div class="top_nav_right">
+                <span><i class="fa fa-phone"></i> (11) 99999-9999</span>
+                <a href="mailto:contato@fermarc.com.br"><i class="fa fa-envelope"></i> contato@fermarc.com.br</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HEADER PRINCIPAL -->
+    <header class="header_main">
+        <div class="header_main_container">
+            <a href="#" class="logo">
+                <i class="fa fa-robot logo-icon"></i>
+                <span>FERMARC</span>
+            </a>
+            
+            <form class="search-form" onsubmit="return false;">
+                <input type="text" class="search-input" placeholder="Buscar produtos, categorias...">
+                <button type="submit" class="search-btn">
+                    <i class="fa fa-search"></i> Buscar
+                </button>
+            </form>
+            
+            <div class="header_actions">
+                <a href="#" class="header_action">
+                    <i class="fa fa-user"></i>
+                    <span>Login</span>
+                </a>
+                <a href="#" class="header_action">
+                    <i class="fa fa-shopping-cart"></i>
+                    <span>Carrinho</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- SIDEBAR + BANNER -->
+    <div class="sidebar_wrapper">
+        <!-- SIDEBAR FLUTUANTE -->
+        <aside class="sidebar_categories">
+            <div class="sidebar_header">
+                <i class="fa fa-bars"></i>
+                Categorias
+            </div>
+            <ul class="sidebar_menu">
+                <li>
+                    <a href="#">
+                        <span><i class="fa fa-microchip fa-fw"></i> Arduino</span>
+                        <i class="fa fa-chevron-right"></i>
+                    </a>
+                    <div class="sidebar_submenu">
+                        <div class="submenu_categories">
+                            <h4>Placas Arduino</h4>
+                            <ul class="submenu_list">
+                                <li><a href="#">Arduino UNO</a></li>
+                                <li><a href="#">Arduino Mega</a></li>
+                                <li><a href="#">Arduino Nano</a></li>
+                                <li><a href="#">Arduino Leonardo</a></li>
+                            </ul>
+                        </div>
+                        <div class="submenu_categories">
+                            <h4>Shields</h4>
+                            <ul class="submenu_list">
+                                <li><a href="#">Motor Shield</a></li>
+                                <li><a href="#">Ethernet Shield</a></li>
+                                <li><a href="#">WiFi Shield</a></li>
+                            </ul>
+                        </div>
+                        <div class="submenu_image">
+                            <i class="fa fa-microchip" style="font-size: 120px; color: #ddd;"></i>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <a href="#">
+                        <span><i class="fa fa-wifi fa-fw"></i> Raspberry Pi</span>
+                        <i class="fa fa-chevron-right"></i>
+                    </a>
+                    <div class="sidebar_submenu">
+                        <div class="submenu_categories">
+                            <h4>Placas Raspberry</h4>
+                            <ul class="submenu_list">
+                                <li><a href="#">Raspberry Pi 4</a></li>
+                                <li><a href="#">Raspberry Pi Zero</a></li>
+                                <li><a href="#">Raspberry Pico</a></li>
+                            </ul>
+                        </div>
+                        <div class="submenu_image">
+                            <i class="fa fa-wifi" style="font-size: 120px; color: #ddd;"></i>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <a href="#">
+                        <span><i class="fa fa-cog fa-fw"></i> Sensores</span>
+                        <i class="fa fa-chevron-right"></i>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <span><i class="fa fa-bolt fa-fw"></i> Módulos</span>
+                        <i class="fa fa-chevron-right"></i>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <span><i class="fa fa-cube fa-fw"></i> Componentes</span>
+                        <i class="fa fa-chevron-right"></i>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <span><i class="fa fa-book fa-fw"></i> Kits Didáticos</span>
+                        <i class="fa fa-chevron-right"></i>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <span><i class="fa fa-wrench fa-fw"></i> Ferramentas</span>
+                        <i class="fa fa-chevron-right"></i>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <span><i class="fa fa-print fa-fw"></i> Impressão 3D</span>
+                        <i class="fa fa-chevron-right"></i>
+                    </a>
+                </li>
+            </ul>
+        </aside>
+    </div>
+
+    <!-- FULLBANNER CAROUSEL -->
+    <section class="fullbanner_section">
+        <div class="carousel">
+            <div class="carousel_track" id="carouselTrack">
+                <div class="carousel_slide slide1"></div>
+                <div class="carousel_slide slide2"></div>
+                <div class="carousel_slide slide3"></div>
+            </div>
+            <button class="carousel_btn prev" onclick="moveCarousel(-1)">
+                <i class="fa fa-chevron-left"></i>
+            </button>
+            <button class="carousel_btn next" onclick="moveCarousel(1)">
+                <i class="fa fa-chevron-right"></i>
+            </button>
+        </div>
+        <div class="carousel_dots" id="carouselDots"></div>
+    </section>
+
+    <!-- CONTEÚDO PRINCIPAL -->
+    <div class="content_section">
+        <!-- FEATURES -->
+        <section class="features">
+            <div class="features_grid">
+                <div class="feature_item">
+                    <i class="fa fa-truck feature_icon"></i>
+                    <div class="feature_text">
+                        <strong>Frete Grátis</strong>
+                        <span>Acima de R$ 300</span>
+                    </div>
+                </div>
+                <div class="feature_item">
+                    <i class="fa fa-credit-card feature_icon"></i>
+                    <div class="feature_text">
+                        <strong>Parcele em até 12x</strong>
+                        <span>No cartão de crédito</span>
+                    </div>
+                </div>
+                <div class="feature_item">
+                    <i class="fa fa-shield feature_icon"></i>
+                    <div class="feature_text">
+                        <strong>Compra Segura</strong>
+                        <span>Ambiente protegido</span>
+                    </div>
+                </div>
+                <div class="feature_item">
+                    <i class="fa fa-clock-o feature_icon"></i>
+                    <div class="feature_text">
+                        <strong>Entrega Rápida</strong>
+                        <span>Para todo Brasil</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PRODUTOS EM DESTAQUE -->
+        <section class="products_section" id="produtos">
+            <div class="section_header">
+                <h2 class="section_title">Produtos em Destaque</h2>
+                <a href="#" class="btn_red">Ver Todos</a>
+            </div>
+            <div class="products_grid">
+                <div class="product_card">
+                    <div class="product_image">
+                        <i class="fa fa-thermometer-half"></i>
+                    </div>
+                    <div class="product_code">Código: 767</div>
+                    <div class="product_name">Sensor de Temperatura DHT22</div>
+                    <div class="product_price">R$ 45,90</div>
+                    <div class="product_installments">9x de R$ 5,10 sem juros</div>
+                    <div class="product_pix">R$ 43,60 no PIX</div>
+                    <button class="btn_buy">Adicionar ao Carrinho</button>
+                </div>
+                
+                <div class="product_card">
+                    <div class="product_image">
+                        <i class="fa fa-microchip"></i>
+                    </div>
+                    <div class="product_code">Código: 102</div>
+                    <div class="product_name">Arduino UNO R3 Original</div>
+                    <div class="product_price">R$ 89,90</div>
+                    <div class="product_installments">9x de R$ 9,99 sem juros</div>
+                    <div class="product_pix">R$ 85,40 no PIX</div>
+                    <button class="btn_buy">Adicionar ao Carrinho</button>
+                </div>
+                
+                <div class="product_card">
+                    <div class="product_image">
+                        <i class="fa fa-wifi"></i>
+                    </div>
+                    <div class="product_code">Código: 345</div>
+                    <div class="product_name">Módulo ESP32 WiFi Bluetooth</div>
+                    <div class="product_price">R$ 59,90</div>
+                    <div class="product_installments">9x de R$ 6,65 sem juros</div>
+                    <div class="product_pix">R$ 56,90 no PIX</div>
+                    <button class="btn_buy">Adicionar ao Carrinho</button>
+                </div>
+                
+                <div class="product_card">
+                    <div class="product_image">
+                        <i class="fa fa-cog"></i>
+                    </div>
+                    <div class="product_code">Código: 221</div>
+                    <div class="product_name">Sensor Ultrassônico HC-SR04</div>
+                    <div class="product_price">R$ 12,90</div>
+                    <div class="product_installments">à vista</div>
+                    <div class="product_pix">R$ 12,25 no PIX</div>
+                    <button class="btn_buy">Adicionar ao Carrinho</button>
+                </div>
+                
+                <div class="product_card">
+                    <div class="product_image">
+                        <i class="fa fa-battery-full"></i>
+                    </div>
+                    <div class="product_code">Código: 456</div>
+                    <div class="product_name">Bateria Li-Po 3.7V 2000mAh</div>
+                    <div class="product_price">R$ 35,90</div>
+                    <div class="product_installments">à vista</div>
+                    <div class="product_pix">R$ 34,10 no PIX</div>
+                    <button class="btn_buy">Adicionar ao Carrinho</button>
+                </div>
+                
+                <div class="product_card">
+                    <div class="product_image">
+                        <i class="fa fa-print"></i>
+                    </div>
+                    <div class="product_code">Código: 789</div>
+                    <div class="product_name">Filamento PLA 1kg Branco</div>
+                    <div class="product_price">R$ 69,90</div>
+                    <div class="product_installments">9x de R$ 7,76 sem juros</div>
+                    <div class="product_pix">R$ 66,40 no PIX</div>
+                    <button class="btn_buy">Adicionar ao Carrinho</button>
+                </div>
+                
+                <div class="product_card">
+                    <div class="product_image">
+                        <i class="fa fa-lightbulb-o"></i>
+                    </div>
+                    <div class="product_code">Código: 555</div>
+                    <div class="product_name">LED RGB 5mm Kit 100un</div>
+                    <div class="product_price">R$ 28,90</div>
+                    <div class="product_installments">à vista</div>
+                    <div class="product_pix">R$ 27,45 no PIX</div>
+                    <button class="btn_buy">Adicionar ao Carrinho</button>
+                </div>
+                
+                <div class="product_card">
+                    <div class="product_image">
+                        <i class="fa fa-book"></i>
+                    </div>
+                    <div class="product_code">Código: 888</div>
+                    <div class="product_name">Kit Iniciante Arduino com Livro</div>
+                    <div class="product_price">R$ 159,90</div>
+                    <div class="product_installments">9x de R$ 17,76 sem juros</div>
+                    <div class="product_pix">R$ 151,90 no PIX</div>
+                    <button class="btn_buy">Adicionar ao Carrinho</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- MARCAS PARCEIRAS -->
+        <section class="brands_section">
+            <div class="brands_container">
+                <div class="section_header">
+                    <h2 class="section_title">Marcas Parceiras</h2>
+                </div>
+                <div class="brands_grid">
+                    <div class="brand_item">
+                        <div style="font-size: 32px; font-weight: 900; color: #333;">Arduino</div>
+                    </div>
+                    <div class="brand_item">
+                        <div style="font-size: 32px; font-weight: 900; color: #c51a4a;">Raspberry</div>
+                    </div>
+                    <div class="brand_item">
+                        <div style="font-size: 32px; font-weight: 900; color: #0066b3;">Intel</div>
+                    </div>
+                    <div class="brand_item">
+                        <div style="font-size: 32px; font-weight: 900; color: #e8710a;">Espressif</div>
+                    </div>
+                    <div class="brand_item">
+                        <div style="font-size: 32px; font-weight: 900; color: #76b900;">NVIDIA</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="footer_container">
+            <div class="footer_grid">
+                <div class="footer_column">
+                    <h3>Institucional</h3>
+                    <ul>
+                        <li><a href="#">Sobre a Fermarc</a></li>
+                        <li><a href="#">Política de Privacidade</a></li>
+                        <li><a href="#">Termos de Uso</a></li>
+                        <li><a href="#">Trabalhe Conosco</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer_column">
+                    <h3>Atendimento</h3>
+                    <ul>
+                        <li><a href="#">Central de Ajuda</a></li>
+                        <li><a href="#">Rastreamento de Pedidos</a></li>
+                        <li><a href="#">Trocas e Devoluções</a></li>
+                        <li><a href="#">Formas de Pagamento</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer_column">
+                    <h3>Categorias</h3>
+                    <ul>
+                        <li><a href="#">Arduino</a></li>
+                        <li><a href="#">Raspberry Pi</a></li>
+                        <li><a href="#">Sensores</a></li>
+                        <li><a href="#">Módulos</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer_column">
+                    <h3>Contato</h3>
+                    <ul>
+                        <li><i class="fa fa-phone"></i> (11) 99999-9999</li>
+                        <li><i class="fa fa-envelope"></i> contato@fermarc.com.br</li>
+                        <li><i class="fa fa-map-marker"></i> São Paulo - SP</li>
+                    </ul>
+                    <div class="footer_social">
+                        <a href="#"><i class="fa fa-facebook"></i></a>
+                        <a href="#"><i class="fa fa-instagram"></i></a>
+                        <a href="#"><i class="fa fa-youtube"></i></a>
+                        <a href="#"><i class="fa fa-whatsapp"></i></a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer_bottom">
+                <p>&copy; 2025 Fermarc Robótica. Todos os direitos reservados. CNPJ: 00.000.000/0001-00</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JAVASCRIPT -->
+    <script>
+        // CAROUSEL
+        let currentSlide = 0;
+        const totalSlides = 3;
+        const track = document.getElementById('carouselTrack');
+        const dotsContainer = document.getElementById('carouselDots');
+
+        // Criar dots
+        for (let i = 0; i < totalSlides; i++) {
+            const dot = document.createElement('button');
+            dot.className = 'carousel_dot';
+            if (i === 0) dot.classList.add('active');
+            dot.onclick = () => goToSlide(i);
+            dotsContainer.appendChild(dot);
+        }
+
+        function moveCarousel(direction) {
+            currentSlide += direction;
+            if (currentSlide < 0) currentSlide = totalSlides - 1;
+            if (currentSlide >= totalSlides) currentSlide = 0;
+            updateCarousel();
+        }
+
+        function goToSlide(index) {
+            currentSlide = index;
+            updateCarousel();
+        }
+
+        function updateCarousel() {
+            track.style.transform = `translateX(-${currentSlide * 100}%)`;
+            
+            const dots = dotsContainer.querySelectorAll('.carousel_dot');
+            dots.forEach((dot, index) => {
+                dot.classList.toggle('active', index === currentSlide);
+            });
+        }
+
+        // Auto-play
+        setInterval(() => {
+            moveCarousel(1);
+        }, 5000);
+
+        // Animação suave ao scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                const href = this.getAttribute('href');
+                if (href !== '#') {
+                    e.preventDefault();
+                    const target = document.querySelector(href);
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
