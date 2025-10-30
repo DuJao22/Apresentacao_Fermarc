@@ -121,20 +121,23 @@ class Product(db.Model):
     categories = db.relationship('Category', secondary=product_categories, backref='products')
     order_items = db.relationship('OrderItem', backref='product', lazy='dynamic')
     
-    @property
-    def images(self):
+    def get_images(self):
         if self.images_json:
-            return json.loads(self.images_json)
+            try:
+                return json.loads(self.images_json)
+            except (json.JSONDecodeError, TypeError):
+                return []
         return []
     
-    @images.setter
-    def images(self, value):
+    def set_images(self, value):
         self.images_json = json.dumps(value)
     
     @property
     def main_image(self):
-        imgs = self.images
-        return imgs[0] if imgs else 'default-product.png'
+        imgs = self.get_images()
+        if imgs and isinstance(imgs, list) and len(imgs) > 0:
+            return imgs[0]
+        return 'default-product.png'
     
     @property
     def in_stock(self):

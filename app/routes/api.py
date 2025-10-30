@@ -39,7 +39,7 @@ def products():
             'price': float(product.price),
             'stock': product.stock,
             'in_stock': product.in_stock,
-            'images': product.images,
+            'images': product.get_images(),
             'main_image': product.main_image,
             'featured': product.featured,
             'categories': [{'id': c.id, 'name': c.name, 'slug': c.slug} for c in product.categories]
@@ -70,7 +70,7 @@ def product_detail(slug):
         'price': float(product.price),
         'stock': product.stock,
         'in_stock': product.in_stock,
-        'images': product.images,
+        'images': product.get_images(),
         'featured': product.featured,
         'specifications': product.specifications,
         'categories': [{'id': c.id, 'name': c.name, 'slug': c.slug} for c in product.categories],

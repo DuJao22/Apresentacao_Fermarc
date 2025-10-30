@@ -95,7 +95,7 @@ Ideal para: Projetos de automação, robótica educacional, IoT, protótipos ele
                 'price': 89.90,
                 'stock': 50,
                 'featured': True,
-                'images': json.dumps(['products/arduino_uno_microcon_cfa4e50a.jpg', 'products/arduino_uno_microcon_e797b1d2.jpg']),
+                'images': ['products/arduino_uno_microcon_cfa4e50a.jpg', 'products/arduino_uno_microcon_e797b1d2.jpg'],
                 'specifications': json.dumps({
                     'Microcontrolador': 'ATmega328P',
                     'Tensão de Operação': '5V',
@@ -135,7 +135,7 @@ Cada sensor vem com pinos conectores para fácil integração. Acompanha guia b�
                 'price': 159.90,
                 'stock': 35,
                 'featured': True,
-                'images': json.dumps(['products/electronic_sensors_u_199347fc.jpg', 'products/electronic_sensors_u_d06ed559.jpg', 'products/electronic_sensors_u_e2b50af4.jpg']),
+                'images': ['products/electronic_sensors_u_199347fc.jpg', 'products/electronic_sensors_u_d06ed559.jpg', 'products/electronic_sensors_u_e2b50af4.jpg'],
                 'specifications': json.dumps({
                     'Quantidade de Sensores': '37 módulos',
                     'Tensão de Operação': '3.3V - 5V',
@@ -168,7 +168,7 @@ Use como: Media center, retro gaming, servidor web, automação residencial, pro
                 'price': 549.90,
                 'stock': 25,
                 'featured': True,
-                'images': json.dumps(['products/raspberry_pi_compute_85bb9cc5.jpg', 'products/raspberry_pi_compute_a08c95b4.jpg']),
+                'images': ['products/raspberry_pi_compute_85bb9cc5.jpg', 'products/raspberry_pi_compute_a08c95b4.jpg'],
                 'specifications': json.dumps({
                     'Processador': 'Broadcom BCM2711 Quad-core Cortex-A72 @ 1.5GHz',
                     'Memória RAM': '4GB LPDDR4-3200',
@@ -214,7 +214,7 @@ Acompanha manual de montagem ilustrado e códigos de exemplo prontos para upload
                 'price': 389.90,
                 'stock': 18,
                 'featured': True,
-                'images': json.dumps(['products/robotics_kit_compone_6ea80773.jpg', 'products/robotics_kit_compone_8f420ec9.jpg']),
+                'images': ['products/robotics_kit_compone_6ea80773.jpg', 'products/robotics_kit_compone_8f420ec9.jpg'],
                 'specifications': json.dumps({
                     'Plataforma': 'Arduino Uno R3 compatível',
                     'Motores': '4x DC com redução 1:48',
@@ -258,7 +258,7 @@ O servo vem com acessórios: braços de diferentes formatos, parafusos de fixaç
                 'price': 45.90,
                 'stock': 75,
                 'featured': False,
-                'images': json.dumps(['products/servo_motor_electron_5c6dea7e.jpg']),
+                'images': ['products/servo_motor_electron_5c6dea7e.jpg'],
                 'specifications': json.dumps({
                     'Modelo': 'MG996R',
                     'Tensão de Operação': '4.8V - 7.2V',
@@ -303,7 +303,7 @@ Fácil integração: apenas 4 pinos (VCC, GND, Trigger, Echo). Compatível com t
                 'price': 15.90,
                 'stock': 120,
                 'featured': False,
-                'images': json.dumps(['products/electronic_sensors_u_199347fc.jpg']),
+                'images': ['products/electronic_sensors_u_199347fc.jpg'],
                 'specifications': json.dumps({
                     'Modelo': 'HC-SR04',
                     'Tensão de Operação': '5V DC',
@@ -325,7 +325,9 @@ Fácil integração: apenas 4 pinos (VCC, GND, Trigger, Echo). Compatível com t
         from app.utils import slugify
         for p_data in products:
             cats = p_data.pop('categories')
+            images = p_data.pop('images', [])
             product = Product(slug=slugify(p_data['title']), **p_data)
+            product.set_images(images)
             product.categories = cats
             db.session.add(product)
         

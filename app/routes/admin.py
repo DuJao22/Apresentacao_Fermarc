@@ -125,7 +125,7 @@ def add_product():
                     if filename:
                         images.append(filename)
         
-        product.images = images
+        product.set_images(images)
         
         if form.categories.data:
             for cat_id in form.categories.data:
@@ -162,13 +162,13 @@ def edit_product(id):
         product.specifications = form.specifications.data
         
         if form.images.data:
-            images = product.images or []
+            images = product.get_images() or []
             for image_file in request.files.getlist('images'):
                 if image_file:
                     filename = save_upload_file(image_file, 'products')
                     if filename:
                         images.append(filename)
-            product.images = images
+            product.set_images(images)
         
         product.categories.clear()
         if form.categories.data:
@@ -192,7 +192,7 @@ def delete_product(id):
     """Deletar produto"""
     product = Product.query.get_or_404(id)
     
-    for image in product.images:
+    for image in product.get_images():
         delete_upload_file(image)
     
     db.session.delete(product)

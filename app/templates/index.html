@@ -919,16 +919,20 @@
                 <a href="{{ url_for('public.shop') }}" class="btn_red">Ver Todos</a>
             </div>
             <div class="products_grid">
-                {% for product in products %}
+                {% for product in featured_products %}
                 <a href="{{ url_for('public.product_detail', slug=product.slug) }}" class="product_card" style="text-decoration: none; color: inherit;">
                     <div class="product_image">
-                        <i class="fa fa-microchip"></i>
+                        {% if product.main_image %}
+                            <img src="{{ url_for('static', filename='uploads/' + product.main_image) }}" alt="{{ product.title }}" style="max-width: 100%; max-height: 100%; object-fit: contain;">
+                        {% else %}
+                            <i class="fa fa-microchip"></i>
+                        {% endif %}
                     </div>
                     <div class="product_code">Código: {{ product.sku }}</div>
                     <div class="product_name">{{ product.title }}</div>
-                    <div class="product_price">R$ {{ "%.2f"|format(product.price) }}</div>
-                    <div class="product_installments">9x de R$ {{ "%.2f"|format(product.price / 9) }} sem juros</div>
-                    <div class="product_pix">R$ {{ "%.2f"|format(product.price * 0.95) }} no PIX</div>
+                    <div class="product_price">R$ {{ "%.2f"|format(product.price|float) }}</div>
+                    <div class="product_installments">9x de R$ {{ "%.2f"|format((product.price|float) / 9) }} sem juros</div>
+                    <div class="product_pix">R$ {{ "%.2f"|format((product.price|float) * 0.95) }} no PIX</div>
                     <button class="btn_buy" onclick="event.preventDefault(); window.location.href='{{ url_for('public.product_detail', slug=product.slug) }}'">Ver Detalhes</button>
                 </a>
                 {% endfor %}

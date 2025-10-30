@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Fermarc Robótica{% endblock %} - Componentes Eletrônicos, Arduino, Sensores e Módulos</title>
+    
+    <meta name="description" content="Fermarc Robótica - Tudo em robótica e automação! Arduino, sensores, módulos, ESP32, componentes eletrônicos.">
+    <meta name="keywords" content="robótica, arduino, sensores, esp32, módulos eletrônicos, automação, fermarc">
+    <meta property="og:title" content="Fermarc Robótica - A loja do maker brasileiro">
+    <meta property="og:type" content="website">
+    <meta name="theme-color" content="#111111">
+    <meta name="robots" content="index, follow">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --color-primary: #111111;
+            --color-red: #DC143C;
+            --color-red-dark: #C41230;
+            --color-white: #FFFFFF;
+            --color-gray-light: #f5f5f5;
+            --color-gray-medium: #7b7b7b;
+            --color-gray-dark: #474747;
+            --color-green: #00C851;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+            margin: 0;
+            background: #fff;
+        }
+        
+        /* TOPO VERMELHO */
+        .top_nav {
+            background: var(--color-red);
+            padding: 0;
+        }
+        
+        .top_nav_container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+        }
+        
+        .top_nav_left {
+            display: flex;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .top_nav_left li a {
+            display: block;
+            padding: 12px 18px;
+            color: #fff;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 700;
+            text-transform: uppercase;
+            transition: background 0.3s;
+        }
+        
+        .top_nav_left li a:hover {
+            background: var(--color-red-dark);
+        }
+        
+        .top_nav_right {
+            color: #fff;
+            font-size: 12px;
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+        
+        .top_nav_right a {
+            color: #fff;
+            text-decoration: none;
+        }
+        
+        /* HEADER PRINCIPAL */
+        .header_main {
+            background: var(--color-primary);
+            padding: 12px 0;
+            border-bottom: 3px solid var(--color-red);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .header_main_container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        .logo {
+            font-size: 28px;
+            font-weight: 900;
+            color: var(--color-red);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            white-space: nowrap;
+            min-width: 200px;
+            text-decoration: none;
+        }
+        
+        .logo-icon {
+            font-size: 32px;
+        }
+        
+        .search-form {
+            flex: 1;
+            display: flex;
+        }
+        
+        .search-input {
+            flex: 1;
+            padding: 10px 15px;
+            border: none;
+            font-size: 14px;
+            outline: none;
+        }
+        
+        .search-btn {
+            padding: 10px 20px;
+            background: var(--color-red);
+            border: none;
+            color: #fff;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        
+        .search-btn:hover {
+            background: var(--color-red-dark);
+        }
+        
+        .header_actions {
+            display: flex;
+            gap: 25px;
+            color: #fff;
+            align-items: center;
+        }
+        
+        .header_action {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            color: #fff;
+            font-size: 14px;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .header_action:hover {
+            color: var(--color-red);
+        }
+        
+        .header_action i {
+            font-size: 24px;
+        }
+
+        /* FOOTER */
+        .footer {
+            background: var(--color-primary);
+            color: #fff;
+            padding: 40px 20px 20px;
+            margin-top: 60px;
+        }
+        
+        .footer_container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .footer_grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .footer_column h3 {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: var(--color-red);
+        }
+        
+        .footer_column ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .footer_column ul li {
+            margin-bottom: 10px;
+        }
+        
+        .footer_column ul li a {
+            color: #ccc;
+            text-decoration: none;
+            font-size: 13px;
+            transition: color 0.3s;
+        }
+        
+        .footer_column ul li a:hover {
+            color: var(--color-red);
+        }
+        
+        .footer_social {
+            display: flex;
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .footer_social a {
+            width: 40px;
+            height: 40px;
+            background: var(--color-red);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 20px;
+            transition: background 0.3s;
+            text-decoration: none;
+        }
+        
+        .footer_social a:hover {
+            background: var(--color-red-dark);
+        }
+        
+        .footer_bottom {
+            border-top: 1px solid #333;
+            padding-top: 20px;
+            text-align: center;
+            font-size: 12px;
+            color: #999;
+        }
+    </style>
+
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    <!-- TOPO VERMELHO -->
+    <nav class="top_nav">
+        <div class="top_nav_container">
+            <ul class="top_nav_left">
+                <li><a href="{{ url_for('public.index') }}">Início</a></li>
+                <li><a href="{{ url_for('public.shop') }}">Produtos</a></li>
+                <li><a href="#sobre">Sobre</a></li>
+                <li><a href="#contato">Contato</a></li>
+            </ul>
+            <div class="top_nav_right">
+                <span><i class="fa fa-phone"></i> (11) 99999-9999</span>
+                {% if current_user.is_authenticated %}
+                    <a href="{{ url_for('account.profile') }}">
+                        <i class="fa fa-user"></i> {{ current_user.username }}
+                    </a>
+                    {% if current_user.is_admin %}
+                        <a href="{{ url_for('admin.dashboard') }}">
+                            <i class="fa fa-cog"></i> Admin
+                        </a>
+                    {% endif %}
+                {% else %}
+                    <a href="{{ url_for('auth.login') }}">
+                        <i class="fa fa-sign-in"></i> Login
+                    </a>
+                {% endif %}
+            </div>
+        </div>
+    </nav>
+
+    <!-- HEADER PRINCIPAL -->
+    <header class="header_main">
+        <div class="header_main_container">
+            <a href="{{ url_for('public.index') }}" class="logo">
+                <i class="fa fa-microchip logo-icon"></i>
+                FERMARC
+            </a>
+            
+            <form class="search-form" action="{{ url_for('public.shop') }}" method="GET">
+                <input type="text" name="q" class="search-input" placeholder="O que você procura?" value="{{ request.args.get('q', '') }}">
+                <button type="submit" class="search-btn">
+                    <i class="fa fa-search"></i> BUSCAR
+                </button>
+            </form>
+            
+            <div class="header_actions">
+                {% if current_user.is_authenticated %}
+                    <a href="{{ url_for('account.profile') }}" class="header_action">
+                        <i class="fa fa-user"></i>
+                        <span>Minha Conta</span>
+                    </a>
+                {% else %}
+                    <a href="{{ url_for('auth.login') }}" class="header_action">
+                        <i class="fa fa-user"></i>
+                        <span>Entrar</span>
+                    </a>
+                {% endif %}
+                
+                <a href="{{ url_for('cart.view_cart') }}" class="header_action">
+                    <i class="fa fa-shopping-cart"></i>
+                    <span>Carrinho</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Mensagens Flash -->
+    <div class="container mt-3">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ 'danger' if category == 'error' else category }} alert-dismissible fade show" role="alert">
+                        {{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+    </div>
+
+    <!-- CONTEÚDO PRINCIPAL -->
+    {% block content %}{% endblock %}
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="footer_container">
+            <div class="footer_grid">
+                <div class="footer_column">
+                    <h3>Sobre a Fermarc</h3>
+                    <p style="font-size: 13px; color: #ccc; line-height: 1.6;">
+                        A Fermarc é uma loja especializada em componentes eletrônicos, 
+                        robótica e automação. Oferecemos os melhores produtos para 
+                        makers, estudantes e profissionais.
+                    </p>
+                    <div class="footer_social">
+                        <a href="#"><i class="fa fa-facebook"></i></a>
+                        <a href="#"><i class="fa fa-instagram"></i></a>
+                        <a href="#"><i class="fa fa-youtube"></i></a>
+                        <a href="#"><i class="fa fa-twitter"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer_column">
+                    <h3>Institucional</h3>
+                    <ul>
+                        <li><a href="#sobre">Sobre Nós</a></li>
+                        <li><a href="#contato">Fale Conosco</a></li>
+                        <li><a href="#termos">Termos de Uso</a></li>
+                        <li><a href="#privacidade">Política de Privacidade</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer_column">
+                    <h3>Atendimento</h3>
+                    <ul>
+                        <li><a href="#entrega">Formas de Entrega</a></li>
+                        <li><a href="#pagamento">Formas de Pagamento</a></li>
+                        <li><a href="#troca">Trocas e Devoluções</a></li>
+                        <li><a href="#perguntas">Perguntas Frequentes</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer_column">
+                    <h3>Contato</h3>
+                    <ul style="list-style: none; padding: 0;">
+                        <li style="margin-bottom: 10px; color: #ccc; font-size: 13px;">
+                            <i class="fa fa-phone" style="margin-right: 8px; color: var(--color-red);"></i>
+                            (11) 99999-9999
+                        </li>
+                        <li style="margin-bottom: 10px; color: #ccc; font-size: 13px;">
+                            <i class="fa fa-envelope" style="margin-right: 8px; color: var(--color-red);"></i>
+                            contato@fermarc.com.br
+                        </li>
+                        <li style="margin-bottom: 10px; color: #ccc; font-size: 13px;">
+                            <i class="fa fa-clock-o" style="margin-right: 8px; color: var(--color-red);"></i>
+                            Seg-Sex: 9h às 18h
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer_bottom">
+                <p>&copy; 2024 Fermarc Robótica - Todos os direitos reservados</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    {% block extra_js %}{% endblock %}
+</body>
+</html>
