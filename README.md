@@ -64,10 +64,38 @@ Fermarc é uma plataforma de e-commerce completa e profissional desenvolvida em 
 ## 📦 Instalação e Configuração
 
 ### Pré-requisitos
-- Python 3.11 ou superior
+- Python 3.8 ou superior
 - pip (gerenciador de pacotes Python)
 
-### Instalação Local
+### Instalação Automática (Recomendado)
+
+**A forma mais fácil e rápida de instalar:**
+
+```bash
+# Clone o repositório
+git clone <seu-repositorio>
+cd fermarc-ecommerce
+
+# Execute o script de instalação automática
+python setup.py
+```
+
+O script `setup.py` irá:
+- ✅ Verificar a versão do Python
+- ✅ Criar o arquivo `.env` automaticamente
+- ✅ Instalar todas as dependências
+- ✅ Configurar o banco de dados
+- ✅ Popular com dados de exemplo (opcional)
+- ✅ Criar pastas necessárias
+
+Após a instalação, basta executar:
+```bash
+python run.py
+```
+
+### Instalação Manual
+
+Se preferir instalar manualmente:
 
 1. **Clone o repositório:**
 ```bash
@@ -75,7 +103,7 @@ git clone <seu-repositorio>
 cd fermarc-ecommerce
 ```
 
-2. **Crie um ambiente virtual:**
+2. **Crie um ambiente virtual (opcional mas recomendado):**
 ```bash
 python -m venv venv
 source venv/bin/activate  # Linux/Mac
@@ -96,10 +124,11 @@ cp .env.example .env
 
 5. **Inicialize o banco de dados:**
 ```bash
-flask db init
-flask db migrate -m "Initial migration"
+# As migrations já existem, então apenas aplique:
 flask db upgrade
-flask init-db  # Popular com dados de exemplo
+
+# Popular com dados de exemplo (opcional):
+FLASK_APP=run.py flask init-db
 ```
 
 6. **Execute o servidor de desenvolvimento:**
@@ -108,6 +137,20 @@ python run.py
 ```
 
 A aplicação estará disponível em `http://localhost:5000`
+
+### 🔧 Solução de Problemas Comuns
+
+**Erro: "No module named 'flask'"**
+- Solução: Execute `pip install -r requirements.txt`
+
+**Erro: "relation 'products' does not exist"**
+- Solução: Execute `flask db upgrade` para criar as tabelas
+
+**Erro: "No such command 'init-db'"**
+- Solução: Use `FLASK_APP=run.py flask init-db`
+
+**Erro ao conectar ao banco de dados**
+- Solução: Verifique se a variável `DATABASE_URL` no `.env` está correta
 
 ---
 

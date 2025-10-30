@@ -24,6 +24,10 @@ limiter = Limiter(
 def create_app(config_name='development'):
     app = Flask(__name__)
     
+    # Validar configurações de segurança
+    from app.config import Config
+    Config.validate_config(config_name)
+    
     app.config.from_object(f'app.config.{config_name.capitalize()}Config')
     
     db.init_app(app)

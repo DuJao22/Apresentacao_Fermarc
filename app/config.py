@@ -2,6 +2,8 @@
 Configurações do projeto Fermarc
 """
 import os
+import sys
+import secrets
 from datetime import timedelta
 
 basedir = os.path.abspath(os.path.dirname(__file__))
@@ -10,6 +12,34 @@ class Config:
     """Configuração base"""
     SECRET_KEY = os.environ.get('SECRET_KEY') or 'dev-secret-key-change-in-production'
     SQLALCHEMY_TRACK_MODIFICATIONS = False
+    
+    @staticmethod
+    def validate_config(config_name='development'):
+        """Valida configurações de segurança"""
+        if config_name == 'production':
+            secret_key = os.environ.get('SECRET_KEY')
+            
+            # Validar SECRET_KEY em produção
+            if not secret_key or secret_key == 'dev-secret-key-change-in-production':
+                print("\n" + "="*60)
+                print("⚠️  AVISO DE SEGURANÇA CRÍTICO!")
+                print("="*60)
+                print("SECRET_KEY não configurada ou usando valor padrão!")
+                print("Isso é EXTREMAMENTE INSEGURO em produção!")
+                print("\nConfigure uma SECRET_KEY forte no arquivo .env:")
+                print(f"SECRET_KEY={secrets.token_hex(32)}")
+                print("="*60 + "\n")
+                sys.exit(1)
+            
+            # Validar DATABASE_URL em produção
+            database_url = os.environ.get('DATABASE_URL')
+            if not database_url or 'sqlite' in database_url.lower():
+                print("\n" + "="*60)
+                print("⚠️  AVISO: Banco de dados não configurado corretamente!")
+                print("="*60)
+                print("Use PostgreSQL em produção, não SQLite!")
+                print("Configure DATABASE_URL no arquivo .env")
+                print("="*60 + "\n")
     
     UPLOAD_FOLDER = os.path.join(basedir, 'static', 'uploads')
     MAX_CONTENT_LENGTH = 16 * 1024 * 1024  # 16MB max upload
