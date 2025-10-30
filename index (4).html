@@ -1,0 +1,1023 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Julieta V1.0 - Placa Arduino - RoboCore</title>
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height">
+    <meta name="theme-color" content="#111111">
+    <meta name="author" content="RoboCore" />
+    <meta name="description" content="Atenção: Esta placa foi descontinuada devido a falta de componentes que está afetando as indústrias de todo o mundo. Sugerimos substituí-la em seus projetos pela mais nova placa controladora de motores da RoboCore, a VESPA." />
+    
+    <style>
+        @font-face {
+            font-family: 'FontAwesome';
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap;
+        }
+        
+        .fa {
+            display: inline-block;
+            font-family: 'FontAwesome', Arial, sans-serif;
+            font-style: normal;
+            font-weight: normal;
+            line-height: 1;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        
+        .fa-whatsapp:before { content: '📱'; }
+        .fa-envelope-o:before { content: '✉'; }
+        .fa-shopping-cart:before { content: '🛒'; }
+        .fa-user-circle-o:before { content: '👤'; }
+        .fa-exclamation-triangle:before { content: '⚠'; }
+        .fa-check:before { content: '✓'; }
+        .fa-bolt:before { content: '⚡'; }
+        .fa-calendar:before { content: '📅'; }
+        .fa-instagram:before { content: '📷'; }
+        .fa-youtube-square:before { content: '▶'; }
+        .fa-twitter-square:before { content: '🐦'; }
+        .fa-facebook-square:before { content: 'f'; }
+        .fa-linkedin-square:before { content: 'in'; }
+        .fa-phone:before { content: '☎'; }
+        .fa-credit-card-alt:before { content: '💳'; }
+        .fa-cc-mastercard:before { content: 'M'; }
+        .fa-cc-visa:before { content: 'V'; }
+        .fa-cc-paypal:before { content: 'P'; }
+        .fa-barcode:before { content: '|||'; }
+        .fa-qrcode:before { content: '▦'; }
+        .fa-lock:before { content: '🔒'; }
+        
+        .fa-2x {
+            font-size: 2em;
+        }
+        
+        .fa-3x {
+            font-size: 3em;
+        }
+        
+        .fa-4x {
+            font-size: 4em;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        @font-face {
+            font-family: 'Red Hat Display';
+            src: local('Red Hat Display');
+            font-weight: normal;
+            font-style: normal;
+        }
+        
+        body {
+            font-family: 'Red Hat Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+            font-size: 14px;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f5f5f5;
+        }
+        
+        a {
+            color: #F0BE00;
+            text-decoration: none;
+        }
+        
+        a:hover {
+            text-decoration: underline;
+        }
+        
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+        
+        .header_top_container {
+            background-color: #23323d;
+            border-bottom: 4px solid #F0BE00;
+        }
+        
+        .header_top {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            min-height: 50px;
+            flex-wrap: wrap;
+        }
+        
+        .header_top_right {
+            display: flex;
+            align-items: center;
+        }
+        
+        .header_top ul {
+            list-style: none;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .header_top ul li {
+            padding: 0;
+        }
+        
+        .header_top ul li a {
+            color: white;
+            padding: 15px 12px;
+            display: block;
+            text-decoration: none;
+            font-size: 12px;
+            font-weight: 600;
+            transition: background-color 0.3s;
+        }
+        
+        .header_top ul li a:hover,
+        .header_top ul li a.selected {
+            background-color: rgba(240, 190, 0, 0.2);
+        }
+        
+        .no-mobile {
+            display: inline-flex !important;
+        }
+        
+        .no-desktop {
+            display: none !important;
+        }
+        
+        .TopBar_container {
+            background-color: white;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .wrapper {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .header_bottom {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            padding: 15px 0;
+        }
+        
+        .logo {
+            height: 60px;
+        }
+        
+        .search-container {
+            flex: 1;
+            max-width: 600px;
+        }
+        
+        .search-container input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        
+        .cart-user-area {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+        
+        .cart-button, .user-button {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 15px;
+            border: 2px solid #F0BE00;
+            border-radius: 4px;
+            background-color: white;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .cart-button:hover, .user-button:hover {
+            background-color: #F0BE00;
+        }
+        
+        .product-container {
+            max-width: 1200px;
+            margin: 30px auto;
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .product-main {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 30px;
+        }
+        
+        .product-image {
+            text-align: center;
+        }
+        
+        .product-image img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        
+        .product-info h1 {
+            font-size: 28px;
+            color: #23323d;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+        
+        .product-status {
+            background-color: #ff4444;
+            color: white;
+            padding: 15px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            text-align: center;
+            font-weight: 600;
+        }
+        
+        .product-price {
+            font-size: 32px;
+            color: #23323d;
+            font-weight: 700;
+            margin: 20px 0;
+        }
+        
+        .product-price .currency {
+            font-size: 18px;
+        }
+        
+        .pix-badge {
+            background-color: #00a868;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+            display: inline-block;
+            margin-left: 10px;
+        }
+        
+        .add-to-cart-btn {
+            background-color: #F0BE00;
+            color: #23323d;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 4px;
+            font-size: 18px;
+            font-weight: 700;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 20px;
+            transition: all 0.3s;
+        }
+        
+        .add-to-cart-btn:hover {
+            background-color: #d4a800;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+        
+        .add-to-cart-btn:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+        
+        .customHeader {
+            background-color: #fff8e1;
+            border-left: 4px solid #F0BE00;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+        
+        .customButton {
+            background-color: #F0BE00;
+            color: #23323d;
+            padding: 12px 24px;
+            border-radius: 4px;
+            display: inline-block;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+        
+        .customButton:hover {
+            background-color: #d4a800;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            text-decoration: none;
+        }
+        
+        .customDescricao {
+            line-height: 1.8;
+            color: #555;
+        }
+        
+        .customDescricao p {
+            margin-bottom: 15px;
+        }
+        
+        .video-container {
+            position: relative;
+            width: 100%;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+            margin: 20px 0;
+        }
+        
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+        
+        .strip {
+            background-color: #f9f9f9;
+            padding: 30px;
+            margin: 30px 0;
+            border-radius: 8px;
+            text-align: center;
+        }
+        
+        .code-container {
+            background-color: #2b2b2b;
+            color: #f8f8f2;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            overflow-x: auto;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        
+        table tr {
+            border-bottom: 1px solid #eee;
+        }
+        
+        table td {
+            padding: 10px;
+            vertical-align: top;
+        }
+        
+        table td:first-child {
+            font-weight: 600;
+            color: #23323d;
+            width: 40%;
+        }
+        
+        .ui-tabs {
+            margin: 30px 0;
+        }
+        
+        .ui-tabs-nav {
+            list-style: none;
+            display: flex;
+            gap: 10px;
+            border-bottom: 3px solid #F0BE00;
+            padding: 0;
+            margin: 0 0 20px 0;
+        }
+        
+        .ui-tabs-nav li {
+            flex: 1;
+        }
+        
+        .ui-tabs-nav li a {
+            display: block;
+            padding: 15px 20px;
+            background-color: #f5f5f5;
+            color: #333;
+            text-align: center;
+            text-decoration: none;
+            font-weight: 600;
+            border-radius: 4px 4px 0 0;
+            transition: all 0.3s;
+        }
+        
+        .ui-tabs-nav li.ui-tabs-active a,
+        .ui-tabs-nav li a:hover {
+            background-color: #F0BE00;
+            color: #23323d;
+        }
+        
+        .ui-tabs-panel {
+            padding: 20px;
+            background-color: white;
+        }
+        
+        .ui-tabs-panel[aria-hidden="true"] {
+            display: none;
+        }
+        
+        .comment-section {
+            border-top: 1px solid #eee;
+            padding-top: 20px;
+            margin-top: 20px;
+        }
+        
+        .comment {
+            padding: 15px;
+            border-left: 2px solid #F0BE00;
+            margin-bottom: 20px;
+            background-color: #f9f9f9;
+        }
+        
+        .comment-author {
+            font-weight: 600;
+            color: #23323d;
+            margin-bottom: 5px;
+        }
+        
+        .comment-date {
+            font-size: 12px;
+            color: #999;
+            margin-bottom: 10px;
+        }
+        
+        .comment-text {
+            color: #555;
+            line-height: 1.6;
+        }
+        
+        .official_reply {
+            font-weight: bold;
+            background-color: #ffd741;
+            padding: 2px 12px;
+            border-radius: 80px;
+            display: inline-block;
+            color: #564407;
+        }
+        
+        .footer {
+            background-color: #23323d;
+            color: white;
+            padding: 40px 0 0 0;
+            margin-top: 50px;
+        }
+        
+        .footer a {
+            color: white;
+        }
+        
+        .footer a:hover {
+            color: #F0BE00;
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 40px;
+            padding: 0 20px;
+        }
+        
+        .footer-column {
+            flex: 1;
+            min-width: 200px;
+        }
+        
+        .footer-column h4 {
+            font-size: 11px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+        }
+        
+        .footer-column p, .footer-column ul {
+            font-size: 13px;
+            line-height: 1.8;
+        }
+        
+        .footer-column ul {
+            list-style: none;
+        }
+        
+        .footer-column ul li {
+            margin-bottom: 8px;
+        }
+        
+        .social_area ul {
+            display: flex;
+            gap: 10px;
+            list-style: none;
+            margin-top: 10px;
+        }
+        
+        .social_area ul li a {
+            font-size: 24px;
+            transition: color 0.3s;
+        }
+        
+        .social_area ul li a:hover {
+            color: #F0BE00;
+        }
+        
+        .footer__bottom {
+            text-align: center;
+            margin-top: 40px;
+            background-color: rgba(0, 0, 0, 0.4);
+            line-height: 40px;
+            font-size: 13px;
+        }
+        
+        .button-zap2 {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 1000;
+        }
+        
+        .button-zap2 img {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            transition: transform 0.3s;
+        }
+        
+        .button-zap2 img:hover {
+            transform: scale(1.1);
+        }
+        
+        @media (max-width: 768px) {
+            .no-mobile {
+                display: none !important;
+            }
+            
+            .no-desktop {
+                display: block !important;
+            }
+            
+            .product-main {
+                grid-template-columns: 1fr;
+            }
+            
+            .header_top {
+                flex-direction: column;
+                padding: 10px;
+            }
+            
+            .footer-content {
+                flex-direction: column;
+            }
+        }
+        
+        .overlay {
+            color: white;
+            position: fixed;
+            z-index: 9999;
+            width: 100%;
+            height: 100%;
+            background-color: rgb(0 0 0 / 70%);
+            display: none;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .no-print {
+            display: block;
+        }
+        
+        @media print {
+            .no-print {
+                display: none !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="button-zap2 no-print">
+        <a href="https://wa.me/551135227626" target="_blank" title="Fale por WhatsApp" rel="noreferrer noopener">
+            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='45' fill='%2325D366'/%3E%3Cpath fill='white' d='M50 20c-16.5 0-30 13.5-30 30 0 5.3 1.4 10.3 3.8 14.6L20 80l15.7-3.7C40 78.7 44.8 80 50 80c16.5 0 30-13.5 30-30S66.5 20 50 20zm15.3 42.7c-.7 1.9-3.4 3.6-5.6 4-.9.2-2.1.3-3.4-.2-1.5-.5-3.4-1.2-5.9-2.4-10.5-4.6-17.3-15.2-17.8-15.9-.5-.7-4.2-5.6-4.2-10.7 0-5.1 2.7-7.6 3.6-8.6.9-1 2-1.3 2.7-1.3h2c.6 0 1.5-.2 2.3 1.8.9 2 3 7.3 3.3 7.8.3.5.5 1.1.1 1.8-.4.7-.6 1.1-1.2 1.7-.6.6-1.2 1.3-1.7 1.8-.6.5-1.2 1.1-.5 2.1.7 1 3.1 5.1 6.6 8.3 4.5 4.1 8.3 5.4 9.5 6 1.2.6 1.9.5 2.6-.3.7-.8 3-3.5 3.8-4.7.8-1.2 1.6-1 2.7-.6 1.1.4 7 3.3 8.2 3.9 1.2.6 2 .9 2.3 1.4.3.5.3 2.9-.4 4.8z'/%3E%3C/svg%3E" alt="WhatsApp">
+        </a>
+    </div>
+
+    <div canvas="container" id="container">
+        <div class="header_top_container">
+            <div class="header_top no-print">
+                <div class="header_top_right fltleft">
+                    <ul>
+                        <li class="no-mobile"><a href="/" class="selected">LOJA VIRTUAL</a></li>
+                        <li class="no-mobile"><a href="/tutoriais">TUTORIAIS</a></li>
+                        <li class="no-mobile"><a href="https://ide.robocore.net/ui/">IDE</a></li>
+                        <li class="no-mobile"><a href="https://events.robocore.net">EVENTOS</a></li>
+                        <li class="no-mobile"><a href="/quem_somos">QUEM SOMOS</a></li>
+                        <li class="no-mobile"><a href="/contato">CONTATO</a></li>
+                    </ul>
+                </div>
+
+                <div class="header_top_right">
+                    <ul class="no-mobile">
+                        <li style="list-style: none;">
+                            <a href="https://wa.me/551135227626" style="text-decoration: none; margin-right: 10px;">
+                                <i class="fa fa-whatsapp" aria-hidden="true" style="margin-right: 3px; color: #F0BE00;"></i> 
+                                <span style="color: white;">(11) 3522-7626</span>
+                            </a> 
+                            <span style="margin-right: 10px;">
+                                <i class="fa fa-envelope-o" aria-hidden="true" style="margin-right: 3px; color: #F0BE00;"></i> vendas@robocore.net
+                            </span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <div class="TopBar_container">
+            <div class="wrapper">
+                <div class="header_bottom">
+                    <div class="logo">
+                        <a href="/">
+                            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 50'%3E%3Ctext x='10' y='35' font-family='Arial, sans-serif' font-size='28' font-weight='bold' fill='%2323323d'%3ERoboCore%3C/text%3E%3C/svg%3E" alt="RoboCore" style="height: 40px;">
+                        </a>
+                    </div>
+                    
+                    <div class="search-container">
+                        <input type="text" id="acSearch" placeholder="O que você está procurando?">
+                    </div>
+                    
+                    <div class="cart-user-area">
+                        <div class="cart-button">
+                            <i class="fa fa-shopping-cart fa-2x"></i>
+                            <div class="no-mobile">
+                                <div style="font-size: 12px;">Meu</div>
+                                <div style="font-weight: bold;">Carrinho</div>
+                            </div>
+                        </div>
+                        
+                        <div class="user-button">
+                            <i class="fa fa-user-circle-o fa-2x"></i>
+                            <div class="no-mobile">
+                                <div style="font-size: 12px;">Entre ou</div>
+                                <div style="font-weight: bold;">Cadastre-se</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="product-container">
+            <div class="product-main">
+                <div class="product-image">
+                    <img src="https://d229kd5ey79jzj.cloudfront.net/773/images/773_1_H.png" alt="Julieta V1.0 - Placa Arduino">
+                </div>
+                
+                <div class="product-info">
+                    <h1>Julieta V1.0 - Placa Arduino</h1>
+                    
+                    <div class="product-status">
+                        <i class="fa fa-exclamation-triangle"></i> PRODUTO DESCONTINUADO
+                    </div>
+                    
+                    <div class="product-price">
+                        <span class="currency">R$</span> 208,05
+                        <span class="pix-badge">no PIX</span>
+                    </div>
+                    
+                    <p style="color: #666; margin: 20px 0;">
+                        <strong>Código do produto:</strong> RB-ROB-773
+                    </p>
+                    
+                    <button class="add-to-cart-btn" disabled>
+                        <i class="fa fa-shopping-cart"></i> PRODUTO INDISPONÍVEL
+                    </button>
+                    
+                    <div style="margin-top: 30px; padding: 20px; background-color: #f9f9f9; border-radius: 8px;">
+                        <h3 style="margin-bottom: 15px; color: #23323d;">Especificações Rápidas</h3>
+                        <ul style="line-height: 2; color: #555;">
+                            <li><i class="fa fa-check" style="color: #F0BE00;"></i> Microcontrolador: ATmega328P</li>
+                            <li><i class="fa fa-check" style="color: #F0BE00;"></i> Tensão de operação: 5V</li>
+                            <li><i class="fa fa-check" style="color: #F0BE00;"></i> Compatível com Arduino UNO R3</li>
+                            <li><i class="fa fa-check" style="color: #F0BE00;"></i> Controlador de motores L298P integrado</li>
+                            <li><i class="fa fa-check" style="color: #F0BE00;"></i> 14 pinos I/O digitais</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="tabs">
+                <ul class="ui-tabs-nav" role="tablist">
+                    <li class="ui-tabs-active" role="tab">
+                        <a href="#descricao" role="presentation">Descrição</a>
+                    </li>
+                    <li role="tab">
+                        <a href="#comentarios" role="presentation">Comentários</a>
+                    </li>
+                </ul>
+
+                <div id="descricao" class="ui-tabs-panel" aria-hidden="false">
+                    <div class="customHeader">
+                        <p style="font-size: 14px; line-height: 1.68; display: block; text-align: center;">
+                            <b>Atenção:</b> Esta placa foi descontinuada devido a falta de componentes que está afetando as indústrias de todo o mundo. Sugerimos substituí-la em seus projetos pela mais nova placa controladora de motores da RoboCore, a VESPA.<br> 
+                            A Vespa conta com o módulo ESP32 com WiFi e Bluetooth, ponte-H dupla e conversor DC-DC para servos motores.
+                        </p>
+                        <center>
+                            <a href="https://www.robocore.net/placa-robocore/vespa" class="customButton" style="margin: 16px 0;">
+                                <i class="fa fa-bolt" style="font-size: 21px; margin-right: 12px;"></i>CONHECER A PLACA VESPA
+                            </a>
+                        </center>
+                    </div>
+
+                    <div class="customDescricao">
+                        <p>
+                            A Julieta é a solução completa para criação de robôs móveis de pequeno porte que possui todos os componentes necessários para movimentar seu robô em uma única e compacta placa, de apenas 8x9cm.
+                        </p>
+
+                        <div class="video-container">
+                            <iframe src="https://www.youtube.com/embed/Bi6koyh0W20" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        </div>
+
+                        <p>
+                            A Julieta possui um microcontrolador ATmega328P com bootloader do <strong>Arduino UNO R3</strong>, permitindo que seja programada com a IDE do Arduino, além de ter um chip L298P que permitirá você <strong>controlar facilmente 2 motores DC com escova de maneira independente</strong>, podendo suprir uma corrente de até 2A, fazendo seu robô se movimentar na direção e velocidade que você quiser.
+                        </p>
+
+                        <p>
+                            Além disso, possui barramento de pinos macho e fêmea para fácil ligação de sensores ou atuadores, e ainda inclui dois botões para uso geral, que podem ser programados via software, por exemplo, para acionar ou desacionar seu robô.
+                        </p>
+
+                        <p>
+                            Com esta simples e compacta solução, seu robô com certeza vai sair não só do papel, mas também do lugar!
+                        </p>
+
+                        <div class="strip">
+                            <center>
+                                <a href="https://d229kd5ey79jzj.cloudfront.net/773/Julieta_infos-01.png" target="_blank">
+                                    <img src="https://d229kd5ey79jzj.cloudfront.net/773/Julieta_infos-01.png" alt="Informações da placa" style="max-width: 820px; border-radius: 8px;">
+                                </a>
+                            </center>
+                        </div>
+
+                        <p>
+                            Veja abaixo um código de exemplo que faz com que seu robô com a placa Julieta ande pra frente durante 1 segundo, fique parado durante 1 segundo, ande para trás durante 1 segundo e pare novamente:
+                        </p>
+
+                        <div class="code-container">
+<pre>const int motor1 = 5; //velocidade motor 1 - de 0 a 255
+const int motor2 = 6; //velocidade motor 2 - de 0 a 255
+const int dir1 = 7; //direcao do motor 1 - HIGH ou LOW
+const int dir2 = 8; //direcao do motor 2 - HIGH ou LOW
+
+void setup() {
+  pinMode(motor1, OUTPUT);
+  pinMode(motor2, OUTPUT);
+  pinMode(dir1, OUTPUT);
+  pinMode(dir2, OUTPUT);
+}
+
+void loop() {
+  digitalWrite(dir1, HIGH); //SENTIDO DE ROTACAO
+  digitalWrite(dir2, LOW);
+  analogWrite(motor1, 200); //VELOCIDADE
+  analogWrite(motor2, 200);
+
+  delay(1000);
+
+  analogWrite(motor1, 0);
+  analogWrite(motor2, 0);
+
+  delay(1000);
+
+  digitalWrite(dir1, LOW);
+  digitalWrite(dir2, HIGH);
+  analogWrite(motor1, 200);
+  analogWrite(motor2, 200);
+
+  delay(1000);
+
+  analogWrite(motor1, 0);
+  analogWrite(motor2, 0);
+
+  delay(1000);
+}</pre>
+                        </div>
+                    </div>
+
+                    <br><br>
+                    <strong>Especificações:</strong><br><br>
+                    <b>Microcontrolador:</b><br>
+                    <table>
+                        <tr><td>Tamanho:</td><td>9 cm x 8 cm x 1,3 cm (9 cm x 9,6 cm x 1,3 cm com os conectores)</td></tr>
+                        <tr><td>Microcontrolador:</td><td>ATmega328P</td></tr>
+                        <tr><td>Tensão de operação:</td><td>5 V</td></tr>
+                        <tr><td>Tensão de entrada (recomendada):</td><td>8-12 V</td></tr>
+                        <tr><td>Tensão de entrada (limites):</td><td>7,5-15 V</td></tr>
+                        <tr><td>Pinos de entrada/saída (I/O) digitais:</td><td>14 (dos quais 6 podem ser saídas PWM)</td></tr>
+                        <tr><td>Pinos de entrada analógicas:</td><td>6 (+2 no barramento externo)</td></tr>
+                        <tr><td>Corrente DC por pino I/O:</td><td>40 mA</td></tr>
+                        <tr><td>Corrente DC para o barramento de 5 V:</td><td>3 A</td></tr>
+                        <tr><td>Corrente DC para o pino de 3,3 V:</td><td>200 mA*</td></tr>
+                        <tr><td>Memória Flash:</td><td>32 KB (dos quais 0,5 kB são usados pelo <i>bootloader</i>)</td></tr>
+                        <tr><td>SRAM:</td><td>2 KB</td></tr>
+                        <tr><td>EEPROM:</td><td>1 KB</td></tr>
+                        <tr><td>Frequência de clock:</td><td>16 MHz</td></tr>
+                        <tr><td>Temperatura de operação:</td><td>de 10 ºC a 60 ºC</td></tr>
+                    </table>
+                    <i>* tensão estimada considerando que a corrente é compartilhada com a do regulador de 5V e que a placa está sendo usada apenas para alimentação em 3,3V.</i>
+                    <br><br>
+                    
+                    <b>Circuito Controlador de Motores:</b><br><br>
+                    <table>
+                        <tr><td>Circuito Integrado:</td><td>L298P</td></tr>
+                        <tr><td>Corrente máxima por motor:</td><td>2A</td></tr>
+                        <tr><td>Tensão drenada aos motores:</td><td>7,5V a 15V <i>(a mesma tensão dos motores é utilizada para alimentar o microcontrolador)</i></td></tr>
+                    </table>
+                    Controle de velocidade em ambos os sentidos de maneira independente.<br><br>
+                    
+                    <strong>Observações:</strong>
+                    <ul style="margin-left: 20px; line-height: 2;">
+                        <li>Compatível com todos os shields feitos para Arduino UNO R3 (e versões anteriores) existentes</li>
+                        <li>Programe ela usando a IDE do Arduino, selecionando a placa Arduino UNO R3 (o chip ATmega328 usado possui o bootloader do Arduino UNO R3)</li>
+                        <li>Garantia de 6 meses para defeitos de fabricação</li>
+                    </ul>
+
+                    <strong>Documentação:</strong>
+                    <ul style="margin-left: 20px; line-height: 2;">
+                        <li><a href="https://d229kd5ey79jzj.cloudfront.net/773/Julieta_v1.0.pdf">Esquema Elétrico</a></li>
+                        <li><a href="https://d229kd5ey79jzj.cloudfront.net/773/Julieta.fzpz">Componente para Fritzing</a></li>
+                        <li><a href="https://d229kd5ey79jzj.cloudfront.net/773/Dimensoes.png">Dimensões</a></li>
+                        <li><a href="http://www.ftdichip.com/Drivers/VCP.htm">Download do Driver FTDI</a> (escolha a versão apropriada)</li>
+                        <li><a href="https://www.robocore.net/tutoriais/instalacao-driver-da-blackboard#blackboard-uno-v1.1">Tutorial de instalação do driver</a></li>
+                        <li><a href="https://d229kd5ey79jzj.cloudfront.net/773/julieta_2motors.png">Exemplo de Ligação com 2 Motores DC</a></li>
+                        <li><a href="https://d229kd5ey79jzj.cloudfront.net/773/julieta_4motors.png">Exemplo de Ligação com 4 Motores DC</a></li>
+                        <li><a href="https://d229kd5ey79jzj.cloudfront.net/773/julieta_servo.png">Exemplo de Ligação com Servo Motor</a></li>
+                    </ul>
+                </div>
+
+                <div id="comentarios" class="ui-tabs-panel" aria-hidden="true">
+                    <div class="comment-section">
+                        <p><br>Para fazer comentários é necessário estar logado. <a href="/conta">Efetuar login</a>.<br><br>
+                        Você ainda não é cadastrado? <a href="/cadastro">Cadastre-se agora!</a></p>
+                        
+                        <div class="comment">
+                            <div class="comment-author"><strong>SamuelSerqueira</strong></div>
+                            <div class="comment-date"><i class="fa fa-calendar"></i> Enviado 2022-10-18 09:26:16</div>
+                            <div class="comment-text">
+                                Bom dia. Tem previsão de quando chega a placa para venda?
+                            </div>
+                        </div>
+                        
+                        <div class="comment" style="margin-left: 20px;">
+                            <div class="comment-author">SamuelSerqueira</div>
+                            <div class="comment-date"><i class="fa fa-calendar"></i> Enviado 2022-10-18 11:08:40</div>
+                            <div class="comment-text">
+                                Desculpa. Agora q vi na descrição, a resposta para minha pergunta. Obrigado.
+                            </div>
+                        </div>
+                        
+                        <div class="comment">
+                            <div class="comment-author"><strong>victorbragaeng</strong></div>
+                            <div class="comment-date"><i class="fa fa-calendar"></i> Enviado 2021-05-15 23:12:49</div>
+                            <div class="comment-text">
+                                Existe a possibilidade de eu controlar os motores através de um joystick analógico? Situação: Possuo 2 motores RC que vão movimentar o robo e mais 2 servos que vão movimentar a câmera. quero controlar os 2 RC com um joystick e os 2 servos com o outro joystick. O arduino que estou utilizando é o julieta v1.
+                                Já consegui controlar os dois servos pesquisando na internet, mas os motores RC ficam em um estado de curto quando ligados (sou iniciante). Alguém poderia ajudar?
+                            </div>
+                        </div>
+                        
+                        <div class="comment" style="margin-left: 20px;">
+                            <div class="comment-author"><span class="official_reply"><i class="fa fa-bolt"></i> Giovanni5</span></div>
+                            <div class="comment-date"><i class="fa fa-calendar"></i> Enviado 2021-05-17 08:22:23</div>
+                            <div class="comment-text">
+                                Sim, é possível controlar os motores DC conectados à Julieta usando um Joystick, e para isso você precisará mapear as leituras dos eixos do Joystick, basicamente como você deve ter feito para o controle dos servomotores. Se quiser, você também pode inserir uma lógica no seu código, para verificar se o eixo do Joystick foi posicionado para a frente, e controlar ambos os motores ao mesmo tempo, e controlar apenas um dos motores quando o eixo do Joystick for colocado para um dos lados, simulando um rádio controle.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer no-print">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h4>ROBOCORE TECNOLOGIA</h4>
+                    <p>A RoboCore foi criada em 2008 com o intuito de incentivar o desenvolvimento tecnológico, fabricando e fornecendo peças para automação e robótica de alta qualidade a preços acessíveis.</p>
+                    <p>RoboCore Tecnologia LTDA<br>
+                    CNPJ 10.383.409/0001-98<br>
+                    D-U-N-S Certified: 89-963-8833<br>
+                    Santana de Parnaíba/SP - Brasil</p>
+                    
+                    <h4 style="margin-top: 20px;">NOSSAS REDES SOCIAIS</h4>
+                    <div class="social_area">
+                        <ul>
+                            <li><a href="http://www.instagram.com/robocore" target="_blank"><i class="fa fa-instagram"></i></a></li>
+                            <li><a href="http://www.youtube.com/robocore" target="_blank"><i class="fa fa-youtube-square"></i></a></li>
+                            <li><a href="http://www.twitter.com/robocore" target="_blank"><i class="fa fa-twitter-square"></i></a></li>
+                            <li><a href="http://www.facebook.com/robocore" target="_blank"><i class="fa fa-facebook-square"></i></a></li>
+                            <li><a href="https://www.linkedin.com/company/robocore-tecnologia/" target="_blank"><i class="fa fa-linkedin-square"></i></a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="footer-column">
+                    <h4>LINKS ÚTEIS</h4>
+                    <ul>
+                        <li><a href="/quem_somos">Quem somos</a></li>
+                        <li><a href="/distribuidores">Encontre uma loja perto de você</a></li>
+                        <li><a href="mailto:vendas@robocore.net?subject=Novo Distribuidor">Seja um distribuidor</a></li>
+                    </ul>
+                    
+                    <h4 style="margin-top: 20px;">POLÍTICAS DA LOJA</h4>
+                    <ul>
+                        <li><a href="/privacidade">Política de Privacidade</a></li>
+                        <li><a href="/trocas">Política de Trocas e Devoluções</a></li>
+                        <li><a href="/frete">Política de Frete</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-column">
+                    <h4>CENTRAL DE ATENDIMENTO</h4>
+                    <p>Segunda à sexta das 8:00 às 17:00<br>
+                    <i class="fa fa-phone"></i> <a href="https://wa.me/551135227626">(11) 3522-7626</a> <i class="fa fa-whatsapp"></i><br>
+                    <i class="fa fa-envelope-o"></i> vendas@robocore.net</p>
+                </div>
+
+                <div class="footer-column">
+                    <h4>FORMAS DE PAGAMENTO</h4>
+                    <div style="font-size: 24px; line-height: 2;">
+                        <i class="fa fa-credit-card-alt"></i>
+                        <i class="fa fa-cc-mastercard"></i>
+                        <i class="fa fa-cc-visa"></i>
+                        <i class="fa fa-cc-paypal"></i>
+                        <i class="fa fa-barcode"></i>
+                        <i class="fa fa-qrcode"></i>
+                    </div>
+                    
+                    <h4 style="margin-top: 20px;">AUDITORIA DE SEGURANÇA</h4>
+                    <p><i class="fa fa-lock fa-2x" style="color: #F0BE00; margin-right: 10px;"></i> <strong>Site 100% Seguro</strong><br>
+                    <span style="font-size: 11px;">Auditado Diariamente</span></p>
+                </div>
+            </div>
+
+            <div class="footer__bottom">
+                ROBOCORE® 2025. Todos os direitos reservados
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const tabs = document.querySelectorAll('.ui-tabs-nav li a');
+            const panels = document.querySelectorAll('.ui-tabs-panel');
+            
+            tabs.forEach(function(tab, index) {
+                tab.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    tabs.forEach(function(t) {
+                        t.parentElement.classList.remove('ui-tabs-active');
+                    });
+                    
+                    panels.forEach(function(panel) {
+                        panel.setAttribute('aria-hidden', 'true');
+                    });
+                    
+                    this.parentElement.classList.add('ui-tabs-active');
+                    
+                    const targetId = this.getAttribute('href');
+                    const targetPanel = document.querySelector(targetId);
+                    if (targetPanel) {
+                        targetPanel.setAttribute('aria-hidden', 'false');
+                    }
+                });
+            });
+            
+            const cartButtons = document.querySelectorAll('.cart-button, .user-button');
+            cartButtons.forEach(function(button) {
+                button.addEventListener('click', function() {
+                    alert('Funcionalidade de navegação desabilitada nesta demonstração.');
+                });
+            });
+        });
+    </script>
+</body>
+</html>
