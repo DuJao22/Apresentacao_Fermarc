@@ -39,6 +39,13 @@ Full-featured e-commerce platform for Fermarc Robótica, a Brazilian robotics an
 - **Bug Fix:** Initialized database with migrations and seed data
 - Created all database tables (users, products, categories, orders, coupons, etc.)
 - Seeded database with sample products, categories, and admin account
+- **Improvements for New Installations:**
+  - Cleaned requirements.txt (removed duplicates)
+  - Created automated setup script (setup.py) for easy installation
+  - Added security validations in production mode
+  - Created 500 error template
+  - Updated README with clear installation instructions and troubleshooting
+  - Added Config.validate_config() to enforce security in production
 - Verified app is running correctly without errors
 
 ## Features
