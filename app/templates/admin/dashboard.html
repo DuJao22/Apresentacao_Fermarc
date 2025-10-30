@@ -1,0 +1,144 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard Admin - {{ site_name }}{% endblock %}
+
+{% block content %}
+<div class="container-fluid my-4">
+    <h1 class="mb-4">
+        <i class="fas fa-tachometer-alt"></i> Dashboard Administrativo
+        <small class="text-muted">— Desenvolvido por {{ developer }}</small>
+    </h1>
+    
+    <!-- Metrics Cards -->
+    <div class="row mb-4">
+        <div class="col-md-3">
+            <div class="card bg-primary text-white">
+                <div class="card-body">
+                    <h6 class="card-title">Vendas Hoje</h6>
+                    <h3>R$ {{ "%.2f"|format(total_sales_today) }}</h3>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card bg-success text-white">
+                <div class="card-body">
+                    <h6 class="card-title">Vendas 30 dias</h6>
+                    <h3>R$ {{ "%.2f"|format(total_sales_30d) }}</h3>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card bg-warning text-white">
+                <div class="card-body">
+                    <h6 class="card-title">Pedidos Pendentes</h6>
+                    <h3>{{ pending_orders }}</h3>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card bg-info text-white">
+                <div class="card-body">
+                    <h6 class="card-title">Total Produtos</h6>
+                    <h3>{{ total_products }}</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Quick Links -->
+    <div class="row mb-4">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header bg-dark text-white">
+                    <h5 class="mb-0">Acesso Rápido</h5>
+                </div>
+                <div class="card-body">
+                    <a href="{{ url_for('admin.products') }}" class="btn btn-primary me-2">
+                        <i class="fas fa-box"></i> Produtos
+                    </a>
+                    <a href="{{ url_for('admin.orders') }}" class="btn btn-success me-2">
+                        <i class="fas fa-shopping-cart"></i> Pedidos
+                    </a>
+                    <a href="{{ url_for('admin.categories') }}" class="btn btn-info me-2">
+                        <i class="fas fa-tags"></i> Categorias
+                    </a>
+                    <a href="{{ url_for('admin.users') }}" class="btn btn-warning me-2">
+                        <i class="fas fa-users"></i> Usuários
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Top Products -->
+    {% if top_products %}
+    <div class="row mb-4">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header bg-dark text-white">
+                    <h5 class="mb-0">Top 5 Produtos Mais Vendidos</h5>
+                </div>
+                <div class="card-body">
+                    <table class="table table-sm">
+                        <thead>
+                            <tr>
+                                <th>Produto</th>
+                                <th>Vendidos</th>
+                                <th>Receita</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for product in top_products %}
+                            <tr>
+                                <td>{{ product.title }}</td>
+                                <td>{{ product.total_sold }}</td>
+                                <td>R$ {{ "%.2f"|format(product.revenue) }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header bg-dark text-white">
+                    <h5 class="mb-0">Pedidos Recentes</h5>
+                </div>
+                <div class="card-body">
+                    <table class="table table-sm">
+                        <thead>
+                            <tr>
+                                <th>Pedido</th>
+                                <th>Cliente</th>
+                                <th>Total</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for order in recent_orders %}
+                            <tr>
+                                <td>
+                                    <a href="{{ url_for('admin.view_order', id=order.id) }}">
+                                        {{ order.order_number }}
+                                    </a>
+                                </td>
+                                <td>{{ order.user.username }}</td>
+                                <td>R$ {{ "%.2f"|format(order.total) }}</td>
+                                <td>
+                                    <span class="badge bg-{{ 'success' if order.status == 'paid' else 'warning' }}">
+                                        {{ order.status }}
+                                    </span>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

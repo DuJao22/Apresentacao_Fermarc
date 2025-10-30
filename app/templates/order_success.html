@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+
+{% block title %}Pedido Confirmado - {{ site_name }}{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-body text-center py-5">
+                    <i class="fas fa-check-circle fa-5x text-success mb-4"></i>
+                    <h1 class="mb-3">Pedido Confirmado!</h1>
+                    <h3 class="text-muted mb-4">Pedido #{{ order.order_number }}</h3>
+                    
+                    <div class="alert alert-success">
+                        <i class="fas fa-envelope"></i> Enviamos uma confirmação para seu email: <strong>{{ order.user.email }}</strong>
+                    </div>
+                    
+                    <div class="card mt-4">
+                        <div class="card-header bg-dark text-white">
+                            <h5 class="mb-0">Detalhes do Pedido</h5>
+                        </div>
+                        <div class="card-body text-start">
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <strong>Status:</strong> {{ order.status }}<br>
+                                    <strong>Pagamento:</strong> {{ order.payment_method }}<br>
+                                    <strong>Data:</strong> {{ order.created_at.strftime('%d/%m/%Y %H:%M') }}
+                                </div>
+                                <div class="col-md-6 text-end">
+                                    <strong>Subtotal:</strong> R$ {{ "%.2f"|format(order.subtotal) }}<br>
+                                    <strong>Frete:</strong> R$ {{ "%.2f"|format(order.shipping) }}<br>
+                                    <strong class="text-danger">Total:</strong> <strong class="text-danger">R$ {{ "%.2f"|format(order.total) }}</strong>
+                                </div>
+                            </div>
+                            
+                            <h6 class="mt-4 mb-3">Produtos:</h6>
+                            <table class="table table-sm">
+                                <thead>
+                                    <tr>
+                                        <th>Produto</th>
+                                        <th>Qtd</th>
+                                        <th>Preço</th>
+                                        <th>Subtotal</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for item in order.items %}
+                                    <tr>
+                                        <td>{{ item.product_title }}</td>
+                                        <td>{{ item.quantity }}</td>
+                                        <td>R$ {{ "%.2f"|format(item.price) }}</td>
+                                        <td>R$ {{ "%.2f"|format(item.subtotal) }}</td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                            
+                            <h6 class="mt-4 mb-3">Endereço de Entrega:</h6>
+                            <p class="mb-0">
+                                {{ order.shipping_street }}, {{ order.shipping_number }}
+                                {% if order.shipping_complement %}- {{ order.shipping_complement }}{% endif %}<br>
+                                {{ order.shipping_neighborhood }}<br>
+                                {{ order.shipping_city }}/{{ order.shipping_state }} - CEP: {{ order.shipping_zipcode }}
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-4">
+                        <a href="{{ url_for('public.shop') }}" class="btn btn-red">
+                            <i class="fas fa-shopping-bag"></i> Continuar Comprando
+                        </a>
+                        <a href="{{ url_for('auth.orders') }}" class="btn btn-outline-secondary">
+                            <i class="fas fa-list"></i> Ver Meus Pedidos
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

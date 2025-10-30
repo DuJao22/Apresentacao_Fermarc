@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+
+{% block title %}Meu Perfil - {{ site_name }}{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <h1 class="mb-4">Meu Perfil</h1>
+    
+    <div class="row">
+        <div class="col-md-3 mb-4">
+            <div class="list-group">
+                <a href="{{ url_for('auth.profile') }}" class="list-group-item list-group-item-action active">
+                    <i class="fas fa-user"></i> Dados Pessoais
+                </a>
+                <a href="{{ url_for('auth.addresses') }}" class="list-group-item list-group-item-action">
+                    <i class="fas fa-map-marker-alt"></i> Endereços
+                </a>
+                <a href="{{ url_for('auth.orders') }}" class="list-group-item list-group-item-action">
+                    <i class="fas fa-shopping-bag"></i> Meus Pedidos
+                </a>
+                <a href="{{ url_for('auth.change_password') }}" class="list-group-item list-group-item-action">
+                    <i class="fas fa-key"></i> Alterar Senha
+                </a>
+            </div>
+        </div>
+        
+        <div class="col-md-9">
+            <div class="card">
+                <div class="card-header bg-dark text-white">
+                    <h5 class="mb-0">Dados Pessoais</h5>
+                </div>
+                <div class="card-body">
+                    <form method="POST" enctype="multipart/form-data">
+                        {{ form.hidden_tag() }}
+                        
+                        <div class="mb-3">
+                            {{ form.username.label(class="form-label") }}
+                            {{ form.username(class="form-control") }}
+                        </div>
+                        
+                        <div class="mb-3">
+                            {{ form.email.label(class="form-label") }}
+                            {{ form.email(class="form-control") }}
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                {{ form.first_name.label(class="form-label") }}
+                                {{ form.first_name(class="form-control") }}
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                {{ form.last_name.label(class="form-label") }}
+                                {{ form.last_name(class="form-control") }}
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            {{ form.phone.label(class="form-label") }}
+                            {{ form.phone(class="form-control") }}
+                        </div>
+                        
+                        <div class="mb-3">
+                            {{ form.avatar.label(class="form-label") }}
+                            {{ form.avatar(class="form-control") }}
+                        </div>
+                        
+                        <button type="submit" class="btn btn-red">
+                            <i class="fas fa-save"></i> Salvar Alterações
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
