@@ -743,6 +743,36 @@
                 margin-bottom: 20px;
             }
             
+            /* Mobile: Header de categorias vira botão */
+            .sidebar_header {
+                cursor: pointer;
+                position: relative;
+                user-select: none;
+            }
+            
+            .sidebar_header::after {
+                content: '\f107';
+                font-family: FontAwesome;
+                position: absolute;
+                right: 15px;
+                transition: transform 0.3s;
+            }
+            
+            .sidebar_categories.open .sidebar_header::after {
+                transform: rotate(180deg);
+            }
+            
+            /* Mobile: Menu escondido por padrão */
+            .sidebar_menu {
+                max-height: 0;
+                overflow: hidden;
+                transition: max-height 0.3s ease-out;
+            }
+            
+            .sidebar_categories.open .sidebar_menu {
+                max-height: 1000px;
+            }
+            
             .carousel_slide {
                 height: 250px;
             }
@@ -1032,6 +1062,26 @@
         setInterval(() => {
             moveCarousel(1);
         }, 5000);
+
+        // Toggle do menu de categorias no mobile
+        const sidebar = document.querySelector('.sidebar_categories');
+        const sidebarHeader = document.querySelector('.sidebar_header');
+        
+        if (sidebar && sidebarHeader) {
+            sidebarHeader.addEventListener('click', function() {
+                // Só funciona em telas móveis (max-width: 768px)
+                if (window.innerWidth <= 768) {
+                    sidebar.classList.toggle('open');
+                }
+            });
+            
+            // Fecha o menu quando redimensiona para desktop
+            window.addEventListener('resize', function() {
+                if (window.innerWidth > 768) {
+                    sidebar.classList.remove('open');
+                }
+            });
+        }
 
         // Animação suave ao scroll
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
